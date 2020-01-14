@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="N64Toolbox.jnlp">
+  <information>
+    <title>N64Toolbox</title>
+    <vendor>Dorian Pilorge</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="N64Toolbox.jar" size="933397" download="eager" />
+    <jar href="lib\commons-codec-1.14.jar" size="347669" download="eager" />
+    <jar href="lib\commons-io-2.6.jar" size="214788" download="eager" />
+    <jar href="lib\ini4j-0.5.4.jar" size="102220" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="N64Toolbox" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="com.phantomnat.n64toolbox.java.Launcher"  name="N64Toolbox" />
+  <update check="always"/>
+</jnlp>

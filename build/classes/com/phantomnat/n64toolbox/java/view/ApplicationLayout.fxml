@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phantomnat.n64toolbox.java.controller.ApplicationController">
+  <children>
+    <ButtonBar cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="66.0" prefWidth="600.0" style="-fx-background-color: lightgrey; -fx-border-color: gray;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <buttons>
+        <ImageView fitHeight="60.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true" ButtonBar.buttonData="LEFT">
+          <image>
+            <Image url="@../../resources/images/n64-logo.png" />
+          </image>
+        </ImageView>
+        <Button fx:id="btnOpen" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#open" prefHeight="30.0" prefWidth="100.0" text="%open" />
+        <Button fx:id="btnSave" layoutX="448.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="100.0" text="%save" />
+        <Button fx:id="btnExit" layoutX="533.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="100.0" text="%exit" />
+      </buttons>
+      <padding>
+        <Insets left="14.0" right="14.0" />
+      </padding>
+    </ButtonBar>
+    <TabPane fx:id="tabPane" layoutY="66.0" prefHeight="420.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <tabs>
+        <Tab fx:id="tabInfos" text="%informations">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                    <Label text="%fileName" />
+                    <Label text="%fileType" GridPane.rowIndex="1" />
+                    <Label text="%romSize" GridPane.rowIndex="2" />
+                    <Label text="%romName" GridPane.rowIndex="3" />
+                    <Label text="%romMedia" GridPane.rowIndex="4" />
+                    <Label text="%romCartID" GridPane.rowIndex="5" />
+                    <Label text="%romRegion" GridPane.rowIndex="6" />
+                    <Label text="%romVersion" GridPane.rowIndex="7" />
+                    <Label text="%romCIC" GridPane.rowIndex="8" />
+                    <Label text="%romCRC" GridPane.rowIndex="9" />
+                    <Label text="%romCRCStatus" GridPane.rowIndex="10" />
+                    <Label fx:id="lblFilename" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
+                    <Label fx:id="lblFiletype" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label fx:id="lblSize" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label fx:id="lblName" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label fx:id="lblMedia" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label fx:id="lblCartID" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <Label fx:id="lblRegion" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Label fx:id="lblVersion" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Label fx:id="lblCIC" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                    <Label fx:id="lblCRC" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                    <Label fx:id="lblCRCStatus" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  </children>
+                </GridPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="tabZInfos" text="%zeldaInfos">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                    <Label text="%zromName" />
+                    <Label text="%zromEdition" GridPane.rowIndex="1" />
+                    <Label text="%zromCreator" GridPane.rowIndex="2" />
+                    <Label text="%zromBuildDate" GridPane.rowIndex="3" />
+                    <Label text="%zromStatus" GridPane.rowIndex="4" />
+                    <Label fx:id="lblZName" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
+                    <Label fx:id="lblZEdition" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label fx:id="lblZCreator" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label fx:id="lblZBuildDate" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label fx:id="lblZStatus" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  </children>
+                </GridPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="tabMInfos" text="%moreInfos">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                    <Label text="%romByteFormat" />
+                    <Label text="%romClockRateOver" GridPane.rowIndex="1" />
+                    <Label text="%romProgramCounter" GridPane.rowIndex="2" />
+                    <Label text="%romReleaseAddress" GridPane.rowIndex="3" />
+                    <Label text="%romCRC1" GridPane.rowIndex="4" />
+                    <Label text="%romCRC2" GridPane.rowIndex="5" />
+                    <Label text="%romMD5" GridPane.rowIndex="7" />
+                    <Label text="%romSHA1" GridPane.rowIndex="8" />
+                    <Label fx:id="lblByteFormat" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
+                    <Label fx:id="lblClockRateOver" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label fx:id="lblProgramCounter" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label fx:id="lblReleaseAddress" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label fx:id="lblCRC1" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label fx:id="lblCRC2" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <Label fx:id="lblMD5" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                    <Label fx:id="lblSHA1" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  </children>
+                </GridPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="tabLanguage" text="%language">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <GridPane layoutX="260.0" layoutY="105.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="160.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                    <Label text="%langSelect" />
+                    <Button fx:id="btnEnglish" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%english" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                      <GridPane.margin>
+                        <Insets right="20.0" />
+                      </GridPane.margin>
+                    </Button>
+                    <Button fx:id="btnFrench" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%french" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                      <GridPane.margin>
+                        <Insets left="20.0" />
+                      </GridPane.margin>
+                    </Button>
+                    <Button fx:id="btnGerman" disable="true" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%german" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                      <GridPane.margin>
+                        <Insets right="20.0" />
+                      </GridPane.margin>
+                    </Button>
+                    <Button fx:id="btnSpanish" disable="true" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%spanish" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                      <GridPane.margin>
+                        <Insets left="20.0" />
+                      </GridPane.margin>
+                    </Button>
+                    <Button fx:id="btnItalian" disable="true" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%italian" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                      <GridPane.margin>
+                        <Insets right="20.0" />
+                      </GridPane.margin>
+                    </Button>
+                  </children>
+                </GridPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="tabAbout" text="%about">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <Pane layoutX="43.0" layoutY="33.0" prefHeight="150.0" prefWidth="150.0" style="-fx-border-color: lightgrey; -fx-border-style: dotted;">
+                  <children>
+                    <ImageView fx:id="imgAvatar" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                        <Image url="@../../resources/images/makoto-naegi-2.png" />
+                      </image>
+                      <effect>
+                        <DropShadow />
+                      </effect>
+                    </ImageView>
+                  </children>
+                </Pane>
+                <GridPane layoutX="234.0" layoutY="33.0" prefHeight="120.0" prefWidth="500.0">
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                    <Label fx:id="lblPrjTitle" />
+                    <Label fx:id="lblPrjVersion" GridPane.rowIndex="1" />
+                    <Label fx:id="lblPrjCreator" GridPane.rowIndex="2" />
+                    <Label fx:id="lblPrjJavaFX" GridPane.rowIndex="3" />
+                  </children>
+                </GridPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </children>
+</AnchorPane>
