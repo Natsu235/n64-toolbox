@@ -8,6 +8,7 @@ package com.phantomnat.n64toolbox.java.controller;
 import com.phantomnat.n64toolbox.java.Launcher;
 import com.phantomnat.n64toolbox.java.model.Configuration;
 import com.phantomnat.n64toolbox.java.model.Rom;
+import com.phantomnat.n64toolbox.java.model.RomZelda;
 import com.phantomnat.n64toolbox.java.util.N64Util;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,8 +20,6 @@ import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -32,18 +31,13 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class RomController {
     
-    @FXML
-    private Label lblCRCStatus;
-    
     // Configuration
     private static Configuration config = new Configuration();
     
-    // Controlers
-    private static ApplicationController appCtrl = new ApplicationController(); 
-    
     // Models
-    private static Rom rom = new Rom();                // Loaded ROM
-    private static N64Util N64Util = new N64Util();    // N64 Functions
+    private static Rom rom = new Rom();                   // Loaded ROM
+    private static RomZelda romZ = new RomZelda();        // Loaded ROM (Type Zelda)
+    private static N64Util N64Util = new N64Util();       // N64 Functions
     
     // Check if ROM is Loaded
     public boolean isLoaded() {
@@ -57,7 +51,7 @@ public class RomController {
         String fileExt = FilenameUtils.getExtension(fileName);
         byte[] header = new byte[4];
         
-        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "rw");
+        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
         raf.seek(0);
         raf.readFully(header);
         raf.close();
@@ -75,11 +69,37 @@ public class RomController {
         }
     }
     
+    // Check if ROM is Type Zelda
+    protected boolean isZelda() {
+        String romCartID = rom.getCartID();
+        
+        boolean state;
+        switch (romCartID) {
+            case "ZL":    // OOT
+            case "ZS":    // MM
+            case "DL":    // MM DEMO
+                return state = true;
+            default:
+                return state = false;
+        }
+    }
+    
     /*
      * ====================
      * General Informations
      * ====================
      */
+    
+    // Define Loaded ROM File
+    protected void setFile(File $romFile) {
+        rom.setFile($romFile);
+    }
+    
+    // Return Loaded ROM File
+    protected File getFile() {
+        File romFile = rom.getFile();
+        return romFile;
+    }
     
     // Load ROM Format
     protected void loadFormat() {
@@ -162,7 +182,7 @@ public class RomController {
     // Load ROM Media
     protected void loadMedia() throws IOException {
         String romFormat = rom.getFormat();
-        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "rw");
+        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
         byte[] romMedia = new byte[1];
         
         switch (romFormat) {
@@ -203,7 +223,7 @@ public class RomController {
     // Load ROM Cartridge ID
     protected void loadCartID() throws IOException {
         String romFormat = rom.getFormat();
-        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "rw");
+        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
         String romCartID = null;
         byte[] b1 = new byte[1];
         byte[] b2 = new byte[1];
@@ -249,7 +269,7 @@ public class RomController {
     // Load ROM Region
     protected void loadRegion() throws IOException {
         String romFormat = rom.getFormat();
-        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "rw");
+        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
         byte[] romRegion = new byte[1];
         
         switch (romFormat) {
@@ -319,7 +339,7 @@ public class RomController {
     // Load ROM Version
     protected void loadVersion() throws IOException {
         String romFormat = rom.getFormat();
-        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "rw");
+        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
         byte[] romVersion = new byte[1];
         
         switch (romFormat) {
@@ -349,10 +369,9 @@ public class RomController {
         return new String("v" + upper + "." + lower);
     }
     
-    // Return Loaded ROM CIC
-    protected String loadCIC() throws IOException {
-        String fileName = rom.getFile().toString();
-        String fileExt = FilenameUtils.getExtension(fileName);
+    // Load ROM CIC
+    protected void loadCIC() throws IOException {
+        String romFormat = rom.getFormat();
         InputStream is1 = this.getClass().getResourceAsStream(config.getCIC6101());
         InputStream is2 = this.getClass().getResourceAsStream(config.getCIC6102());
         InputStream is3 = this.getClass().getResourceAsStream(config.getCIC6103());
@@ -366,62 +385,83 @@ public class RomController {
         CIC6103 = N64Util.readStreamToBytes(is3, 0, is3.available());
         CIC6105 = N64Util.readStreamToBytes(is5, 0, is5.available());
         CIC6106 = N64Util.readStreamToBytes(is6, 0, is6.available());
-
-        switch (fileExt) {
+        
+        switch (romFormat) {
             case "n64":
                 if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6101)))
-                    return "CIC-NUS-6101";
+                    rom.setCIC("CIC-NUS-6101");
                 else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6102)))
-                    return "CIC-NUS-6102";
+                    rom.setCIC("CIC-NUS-6102");
                 else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6103)))
-                    return "CIC-NUS-6103";
+                    rom.setCIC("CIC-NUS-6103");
                 else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6105)))
-                    return "CIC-NUS-6105";
+                    rom.setCIC("CIC-NUS-6105");
                 else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6106)))
-                    return "CIC-NUS-6106";
+                    rom.setCIC("CIC-NUS-6106");
+                break;
             case "v64":
                 if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6101)))
-                    return "CIC-NUS-6101";
+                    rom.setCIC("CIC-NUS-6101");
                 else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6102)))
-                    return "CIC-NUS-6102";
+                    rom.setCIC("CIC-NUS-6102");
                 else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6103)))
-                    return "CIC-NUS-6103";
+                    rom.setCIC("CIC-NUS-6103");
                 else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6105)))
-                    return "CIC-NUS-6105";
+                    rom.setCIC("CIC-NUS-6105");
                 else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6106)))
-                    return "CIC-NUS-6106";
+                    rom.setCIC("CIC-NUS-6106");
+                break;
             case "z64":
                 if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6101)))
-                    return "CIC-NUS-6101";
+                    rom.setCIC("CIC-NUS-6101");
                 else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6102)))
-                    return "CIC-NUS-6102";
+                    rom.setCIC("CIC-NUS-6102");
                 else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6103)))
-                    return "CIC-NUS-6103";
+                    rom.setCIC("CIC-NUS-6103");
                 else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6105)))
-                    return "CIC-NUS-6105";
+                    rom.setCIC("CIC-NUS-6105");
                 else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6106)))
-                    return "CIC-NUS-6106";
-            default:
-                return Launcher.bundle.getString("invalid");
+                    rom.setCIC("CIC-NUS-6106");
+                break;
+        }
+    }
+    
+    // Return Loaded ROM CIC
+    protected String getCIC() {
+        String romCIC = rom.getCIC();
+        
+        if (romCIC == null)
+            romCIC = Launcher.bundle.getString("invalid");
+        
+        return romCIC;
+    }
+    
+    // Load ROM CRC
+    protected void loadCRC() throws IOException {
+        String romFormat = rom.getFormat();
+        byte[] romCRC = N64Util.readFileToBytes(rom.getFile(), 16, 8);
+        
+        switch (romFormat) {
+            case "n64":
+                rom.setCRC(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCRC), true));
+                break;
+            case "v64":
+                rom.setCRC(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCRC), true));
+                break;
+            case "z64":
+                rom.setCRC(N64Util.convertBytestoHex(romCRC));
+                break;
         }
     }
     
     // Return Loaded ROM CRC
-    protected String loadCRC() throws IOException {
-        String fileName = rom.getFile().toString();
-        String fileExt = FilenameUtils.getExtension(fileName);
-        byte[] romCRC = N64Util.readFileToBytes(rom.getFile(), 16, 8);
+    protected String getCRC() {
+        String romCRC = rom.getCRC();
         
-        switch (fileExt) {
-            case "n64":
-                return N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCRC), true);
-            case "v64":
-                return N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCRC), true);
-            case "z64":
-                return N64Util.convertBytestoHex(romCRC);
-            default:
-                return Launcher.bundle.getString("invalid");
-        }
+        if (romCRC == null)
+            romCRC = Launcher.bundle.getString("invalid");
+        
+        return romCRC;
     }
     
     // Load ROM CRC Status
@@ -461,6 +501,58 @@ public class RomController {
         return romCRCStatusColor;
     }
     
+    /*
+     * ==================
+     * Zelda Informations
+     * ==================
+     */
+    
+    // Load ROM Edition (Type Zelda)
+    protected void loadEdition() throws IOException {
+        String romFormat = rom.getFormat();
+        RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
+        String romEdition = null;
+        byte[] b1 = new byte[1];
+        byte[] b2 = new byte[1];
+        
+        switch (romFormat) {
+            case "n64":
+                // TODO
+            case "v64":
+                // TODO
+            case "z64":
+                
+        }
+        
+        /*
+        switch (romFormat) {
+            case "n64":
+                raf.seek(63);
+                raf.readFully(b1);
+                raf.seek(62);
+                raf.readFully(b2);
+                romCartID = new String(b1) + new String(b2);
+                break;
+            case "v64":
+                raf.seek(61);
+                raf.readFully(b1);
+                raf.seek(60);
+                raf.readFully(b2);
+                romCartID = new String(b1) + new String(b2);
+                break;
+            case "z64":
+                raf.seek(60);
+                raf.readFully(b1);
+                raf.seek(61);
+                raf.readFully(b2);
+                romCartID = new String(b1) + new String(b2);
+                break;
+        }
+        
+        raf.close();
+        rom.setCartID(romCartID);
+        */
+    }
     
     /*
      * ==========================
@@ -518,21 +610,24 @@ public class RomController {
         pw.println("----------------------------");
         pw.println("");
         pw.println("");
-        pw.println("> GENERAL INFORMATIONS");
-        pw.println("");
+        pw.println("----------------------");
+        pw.println(" GENERAL INFORMATIONS");
+        pw.println("----------------------");
         pw.println("Filename:                   " + fileName);
         pw.println("Filetype:                   " + this.getFormat());
         pw.println("Rom Size:                   " + this.getSize());
         pw.println("Rom Name:                   " + this.getName());
-        pw.println("Rom Media Format:           " + this.getMedia());
+        pw.println("Rom Media:                  " + this.getMedia());
         pw.println("Rom Cartridge ID:           " + this.getCartID());
-        //pw.println("Rom Region:                 " + this.getRegion());
-        //pw.println("Rom Version:                " + this.getVersion());
-        //pw.println("Rom CIC Version:            " + lblCICVersion.getText());
-        //pw.println("Rom CRC:                    " + lblCRC.getText());
-        //pw.println("Rom CRC Status:             " + lblCRCStatus.getText());
+        pw.println("Rom Region:                 " + this.getRegion());
+        pw.println("Rom Version:                " + this.getVersion());
+        pw.println("Rom CIC:                    " + this.getCIC());
+        pw.println("Rom CRC:                    " + this.getCRC());
+        pw.println("Rom CRC Status:             " + this.getCRCStatus());
         //pw.println("");
-        //pw.println("ZELDA INFORMATIONS");
+        //pw.println("--------------------");
+        //pw.println(" ZELDA INFORMATIONS");
+        //pw.println("--------------------");
         //pw.println("Real Rom Name:              " + lblZName.getText());
         //pw.println("Rom Edition:                " + lblZEdition.getText());
         //pw.println("Rom Status:                 " + lblZStatus.getText());
@@ -545,8 +640,9 @@ public class RomController {
         //pw.println("Rom Program Counter:        " + lblProgramCounter.getText());
         //pw.println("Rom Release Address:        " + lblReleaseAddress.getText());
         pw.println("");
-        pw.println("> CHECKSUMS INFORMATIONS");
-        pw.println("");
+        pw.println("------------------------");
+        pw.println(" CHECKSUMS INFORMATIONS");
+        pw.println("------------------------");
         pw.println("MD5:                        " + this.getChecksum("md5"));
         pw.println("SHA-1:                      " + this.getChecksum("sha1"));
         pw.close();

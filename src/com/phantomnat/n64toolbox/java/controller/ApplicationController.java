@@ -10,6 +10,8 @@ import com.phantomnat.n64toolbox.java.model.Configuration;
 import com.phantomnat.n64toolbox.java.model.Exception;
 import com.phantomnat.n64toolbox.java.model.Message;
 import com.phantomnat.n64toolbox.java.model.Rom;
+import com.phantomnat.n64toolbox.java.model.RomZelda;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -22,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,7 +44,6 @@ public class ApplicationController implements Initializable {
     
     // Models
     private static Build build = new Build();    // Build Infos
-    private static Rom rom = new Rom();          // Loaded ROM
     
     // Defined Language
     private static ResourceBundle bundle;
@@ -63,9 +63,10 @@ public class ApplicationController implements Initializable {
     
     @FXML
     // Open a ROM
-    private void open(ActionEvent event) {
+    private void open(ActionEvent event) throws IOException {
+        Stage stage = (Stage) btnOpen.getScene().getWindow();
         
-        // Choose a ROM
+        // Select a ROM
         FileChooser fc = new FileChooser();
         if (config.getRomDirectory() != null)
             fc.setInitialDirectory(config.getRomDirectory());
@@ -74,8 +75,20 @@ public class ApplicationController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(bundle.getString("allFiles"), "*.*"));
         
         // Save ROM Path
-        rom.setFile(fc.showOpenDialog(null));
-        config.setRomDirectory(rom.getFile().getParentFile());
+        File oldFile = romCtrl.getFile();
+        File newFile = fc.showOpenDialog(stage);
+        if (newFile != null) {
+            //romCtrl.loadType(newFile);
+            romCtrl.setFile(newFile);
+            config.setRomDirectory(newFile.getParentFile());
+        }
+        else if (oldFile != null) {
+            //romCtrl.loadType(oldFile);
+            romCtrl.setFile(oldFile);
+            config.setRomDirectory(oldFile.getParentFile());
+        }
+        else
+            return;
         
         // Check ROM Header
         Message msgBox;
@@ -83,29 +96,16 @@ public class ApplicationController implements Initializable {
             if (romCtrl.isLoaded() && romCtrl.isValid()) {
                 load();    // Load ROM Infos
                 show();    // Display ROM Infos
+                btnSave.setDisable(false);
             }
-            else
+            else {
+                romCtrl.setFile(oldFile);
                 msgBox = new Message(bundle.getString("invalidRom"), bundle.getString("invalidRomText"), Alert.AlertType.ERROR);
+            }
         }
         catch (java.lang.Exception ex) {
             Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
         }
-    }
-    
-    // Load ROM Infos
-    private void load() throws IOException {
-        romCtrl.loadFormat();
-        romCtrl.loadSize();
-        romCtrl.loadName();
-        romCtrl.loadMedia();
-        romCtrl.loadCartID();
-        romCtrl.loadRegion();
-        romCtrl.loadVersion();
-        rom.setCIC(romCtrl.loadCIC());
-        rom.setCRC(romCtrl.loadCRC());
-        romCtrl.loadCRCStatus();
-        romCtrl.loadChecksum("md5");
-        romCtrl.loadChecksum("sha1");
     }
     
     @FXML
@@ -118,27 +118,6 @@ public class ApplicationController implements Initializable {
             Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
         }
         Message msgBox = new Message(bundle.getString("romInfosSaved"), bundle.getString("romInfosSavedText"), Alert.AlertType.INFORMATION);
-    }
-    
-    // Display ROM Infos
-    private void show() throws IOException {
-        // General Informations
-        lblFilename.setText(rom.getFile().getName());
-        lblFiletype.setText(romCtrl.getFormat());
-        lblSize.setText(romCtrl.getSize());
-        lblName.setText(romCtrl.getName());
-        lblMedia.setText(romCtrl.getMedia());
-        lblCartID.setText(romCtrl.getCartID());
-        lblRegion.setText(romCtrl.getRegion());
-        lblVersion.setText(romCtrl.getVersion());
-        lblCIC.setText(rom.getCIC());
-        lblCRC.setText(rom.getCRC());
-        lblCRCStatus.setText(rom.getCRCStatus());
-        lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());
-        // Miscellaneous Informations
-        lblMD5.setText(romCtrl.getChecksum("md5"));
-        lblSHA1.setText(romCtrl.getChecksum("sha1"));
-        romCtrl.debug();
     }
     
     @FXML
@@ -173,6 +152,53 @@ public class ApplicationController implements Initializable {
         }
         
         Message msgBox = new Message(bundle.getString("langChanged"), bundle.getString("langChangedText"), Alert.AlertType.INFORMATION);
+    }
+    
+    // Load ROM Informations
+    private void load() throws IOException {
+        // General Informations
+        romCtrl.loadFormat();
+        romCtrl.loadSize();
+        romCtrl.loadName();
+        romCtrl.loadMedia();
+        romCtrl.loadCartID();
+        romCtrl.loadRegion();
+        romCtrl.loadVersion();
+        romCtrl.loadCIC();
+        romCtrl.loadCRC();
+        romCtrl.loadCRCStatus();
+        // Zelda Informations
+        //romCtrl.loadRealName();
+        //romCtrl.loadEdition();
+        //romCtrl.loadCreator();
+        // Miscellaneous Informations
+        romCtrl.loadChecksum("md5");
+        romCtrl.loadChecksum("sha1");
+    }
+    
+    // Display ROM Informations
+    private void show() throws IOException {
+        // General Informations
+        lblFilename.setText(romCtrl.getFile().getName());
+        lblFiletype.setText(romCtrl.getFormat());
+        lblSize.setText(romCtrl.getSize());
+        lblName.setText(romCtrl.getName());
+        lblMedia.setText(romCtrl.getMedia());
+        lblCartID.setText(romCtrl.getCartID());
+        lblRegion.setText(romCtrl.getRegion());
+        lblVersion.setText(romCtrl.getVersion());
+        lblCIC.setText(romCtrl.getCIC());
+        lblCRC.setText(romCtrl.getCRC());
+        lblCRCStatus.setText(romCtrl.getCRCStatus());
+        lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());
+        // Zelda Informations
+        //romCtrl.getRealName();
+        //romCtrl.getEdition();
+        //romCtrl.getCreator();
+        // Miscellaneous Informations
+        lblMD5.setText(romCtrl.getChecksum("md5"));
+        lblSHA1.setText(romCtrl.getChecksum("sha1"));
+        //romCtrl.debug();
     }
     
     @Override

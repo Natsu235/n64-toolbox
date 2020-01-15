@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="N64Toolbox.jar" size="933397" download="eager" />
+    <jar href="N64Toolbox.jar" size="934584" download="eager" />
     <jar href="lib\commons-codec-1.14.jar" size="347669" download="eager" />
     <jar href="lib\commons-io-2.6.jar" size="214788" download="eager" />
     <jar href="lib\ini4j-0.5.4.jar" size="102220" download="eager" />

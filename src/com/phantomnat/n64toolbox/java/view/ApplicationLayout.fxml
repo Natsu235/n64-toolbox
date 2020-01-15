@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phantomnat.n64toolbox.java.controller.ApplicationController">
   <children>
@@ -24,9 +25,21 @@
             <Image url="@../../resources/images/n64-logo.png" />
           </image>
         </ImageView>
-        <Button fx:id="btnOpen" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#open" prefHeight="30.0" prefWidth="100.0" text="%open" />
-        <Button fx:id="btnSave" disable="true" layoutX="448.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="100.0" text="%save" />
-        <Button fx:id="btnExit" layoutX="533.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="100.0" text="%exit" />
+        <Button fx:id="btnOpen" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#open" prefHeight="30.0" prefWidth="100.0" text="%open">
+          <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+          </font>
+        </Button>
+        <Button fx:id="btnSave" disable="true" layoutX="448.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="100.0" text="%save">
+          <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+          </font>
+        </Button>
+        <Button fx:id="btnExit" layoutX="533.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="100.0" text="%exit">
+          <font>
+            <Font name="Segoe UI Bold" size="12.0" />
+          </font>
+        </Button>
       </buttons>
       <padding>
         <Insets left="14.0" right="14.0" />

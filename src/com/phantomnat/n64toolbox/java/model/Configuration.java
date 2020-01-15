@@ -14,20 +14,20 @@ import java.util.Locale;
  */
 public class Configuration {
     
-    protected static String cfgPath = "config.ini";
-    protected static double width = 720;
-    protected static double height = 480;
-    protected static boolean resizable = true;
-    protected static String appIcon = "/com/phantomnat/n64toolbox/resources/images/n64-icon.png";
-    protected static Locale appLang = Locale.ENGLISH;
-    protected static File romDir;
+    private static String cfgPath = "config.ini";
+    private static double width = 720;
+    private static double height = 480;
+    private static boolean resizable = true;
+    private static String appIcon = "/com/phantomnat/n64toolbox/resources/images/n64-icon.png";
+    private static Locale appLang = Locale.ENGLISH;
+    private static File romDir;
     
-    protected static String CIC6101 = "/com/phantomnat/n64toolbox/resources/files/6101-CIC.bin";
-    protected static String CIC6102 = "/com/phantomnat/n64toolbox/resources/files/6102-CIC.bin";
-    protected static String CIC6103 = "/com/phantomnat/n64toolbox/resources/files/6103-CIC.bin";
-    protected static String CIC6105 = "/com/phantomnat/n64toolbox/resources/files/6105-CIC.bin";
-    protected static String CIC6106 = "/com/phantomnat/n64toolbox/resources/files/6106-CIC.bin";
-    protected static String CRCList = "/com/phantomnat/n64toolbox/resources/files/N64-CRC-Database.txt";
+    private static String CIC6101 = "/com/phantomnat/n64toolbox/resources/files/6101-CIC.bin";
+    private static String CIC6102 = "/com/phantomnat/n64toolbox/resources/files/6102-CIC.bin";
+    private static String CIC6103 = "/com/phantomnat/n64toolbox/resources/files/6103-CIC.bin";
+    private static String CIC6105 = "/com/phantomnat/n64toolbox/resources/files/6105-CIC.bin";
+    private static String CIC6106 = "/com/phantomnat/n64toolbox/resources/files/6106-CIC.bin";
+    private static String CRCList = "/com/phantomnat/n64toolbox/resources/files/N64-CRC-Database.txt";
     
     public Configuration() {}
     

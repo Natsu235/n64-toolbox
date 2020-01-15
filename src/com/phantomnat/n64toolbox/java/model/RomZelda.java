@@ -14,11 +14,11 @@ import javafx.scene.paint.Paint;
  */
 public class RomZelda extends Rom {
     
-    protected static String realName;
-    protected static String plateform;
-    protected static String creator;
-    protected static String build;
-    protected static String compression;
+    private static String realName;
+    private static String plateform;
+    private static String creator;
+    private static String build;
+    private static String compression;
     
     public RomZelda() {}
     

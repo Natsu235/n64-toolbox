@@ -14,20 +14,20 @@ import javafx.scene.paint.Paint;
  */
 public class Rom {
     
-    protected static File file;
-    protected static String format;
-    protected static long size;
-    protected static String name;
-    protected static String media;
-    protected static String cartID;
-    protected static String region;
-    protected static String version;
-    protected static String CIC;
-    protected static String CRC;
-    protected static String CRCStatus;
-    protected static Paint CRCStatusColor;
-    protected static String MD5;
-    protected static String SHA1;
+    private static File file;
+    private static String format;
+    private static long size;
+    private static String name;
+    private static String media;
+    private static String cartID;
+    private static String region;
+    private static String version;
+    private static String CIC;
+    private static String CRC;
+    private static String CRCStatus;
+    private static Paint CRCStatusColor;
+    private static String MD5;
+    private static String SHA1;
     
     public Rom() {}
     
