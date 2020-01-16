@@ -9,8 +9,6 @@ import com.phantomnat.n64toolbox.java.model.Build;
 import com.phantomnat.n64toolbox.java.model.Configuration;
 import com.phantomnat.n64toolbox.java.model.Exception;
 import com.phantomnat.n64toolbox.java.model.Message;
-import com.phantomnat.n64toolbox.java.model.Rom;
-import com.phantomnat.n64toolbox.java.model.RomZelda;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -55,7 +53,7 @@ public class ApplicationController implements Initializable {
     @FXML
     private Label lblFilename, lblFiletype, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus;
     @FXML
-    private Label lblZName, lblZEdition, lblZCreator, lblZBuildDate, lblZStatus;
+    private Label lblZName, lblZEdition, lblZCreator, lblZBuildDate, lblZCompression;
     @FXML
     private Label lblByteFormat, lblClockRateOver, lblProgramCounter, lblReleaseAddress, lblCRC1, lblCRC2, lblMD5, lblSHA1;
     @FXML
@@ -155,50 +153,44 @@ public class ApplicationController implements Initializable {
     }
     
     // Load ROM Informations
-    private void load() throws IOException {
-        // General Informations
-        romCtrl.loadFormat();
-        romCtrl.loadSize();
-        romCtrl.loadName();
-        romCtrl.loadMedia();
-        romCtrl.loadCartID();
-        romCtrl.loadRegion();
-        romCtrl.loadVersion();
-        romCtrl.loadCIC();
-        romCtrl.loadCRC();
-        romCtrl.loadCRCStatus();
-        // Zelda Informations
-        //romCtrl.loadRealName();
-        //romCtrl.loadEdition();
-        //romCtrl.loadCreator();
-        // Miscellaneous Informations
-        romCtrl.loadChecksum("md5");
-        romCtrl.loadChecksum("sha1");
+    private void load() {
+        String[] loaders = {"loadFormat", "loadSize", "loadName", "loadMedia", "loadCartID", "loadRegion", "loadVersion", "loadCIC", "loadCRC", "loadCRCStatus", "loadEdition", "loadCompression", "loadChecksum", "loadChecksum"};
+        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, "md5", "sha1"};
+        try {
+            for (int i = 0; i < loaders.length; i++) {
+                if (args[i] != null)
+                    romCtrl.getClass().getDeclaredMethod(loaders[i], String.class).invoke(romCtrl, new Object[]{args[i]});
+                else
+                    romCtrl.getClass().getDeclaredMethod(loaders[i]).invoke(romCtrl);
+            }
+        }
+        catch (java.lang.Exception ex) {
+            Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+        }
     }
     
     // Display ROM Informations
     private void show() throws IOException {
-        // General Informations
+        String[] getters = {"getFormat", "getSize", "getName", "getMedia", "getCartID", "getRegion", "getVersion", "getCIC", "getCRC", "getCRCStatus", "getEdition", "getCompression", "getChecksum", "getChecksum"};
+        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, "md5", "sha1"};
+        Label[] labels = {lblFiletype, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus, lblZEdition, lblZCompression, lblMD5, lblSHA1};
+        
         lblFilename.setText(romCtrl.getFile().getName());
-        lblFiletype.setText(romCtrl.getFormat());
-        lblSize.setText(romCtrl.getSize());
-        lblName.setText(romCtrl.getName());
-        lblMedia.setText(romCtrl.getMedia());
-        lblCartID.setText(romCtrl.getCartID());
-        lblRegion.setText(romCtrl.getRegion());
-        lblVersion.setText(romCtrl.getVersion());
-        lblCIC.setText(romCtrl.getCIC());
-        lblCRC.setText(romCtrl.getCRC());
-        lblCRCStatus.setText(romCtrl.getCRCStatus());
+        
+        try {
+            for (int i = 0; i < getters.length; i++) {
+                if (args[i] != null)
+                    labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i], String.class).invoke(romCtrl, new Object[]{args[i]}));
+                else
+                    labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i]).invoke(romCtrl));
+            }
+        }
+        catch (java.lang.Exception ex) {
+            Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+        }
+        
         lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());
-        // Zelda Informations
-        //romCtrl.getRealName();
-        //romCtrl.getEdition();
-        //romCtrl.getCreator();
-        // Miscellaneous Informations
-        lblMD5.setText(romCtrl.getChecksum("md5"));
-        lblSHA1.setText(romCtrl.getChecksum("sha1"));
-        //romCtrl.debug();
+        lblZCompression.setTextFill(romCtrl.getCompressionColor());
     }
     
     @Override

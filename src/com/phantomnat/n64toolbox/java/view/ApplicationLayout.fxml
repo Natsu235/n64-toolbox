@@ -115,16 +115,16 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                   <children>
-                    <Label text="%zromName" />
-                    <Label text="%zromEdition" GridPane.rowIndex="1" />
-                    <Label text="%zromCreator" GridPane.rowIndex="2" />
-                    <Label text="%zromBuildDate" GridPane.rowIndex="3" />
-                    <Label text="%zromStatus" GridPane.rowIndex="4" />
+                    <Label text="%romZName" />
+                    <Label text="%romZEdition" GridPane.rowIndex="1" />
+                    <Label text="%romZCreator" GridPane.rowIndex="2" />
+                    <Label text="%romZBuildDate" GridPane.rowIndex="3" />
+                    <Label text="%romZCompression" GridPane.rowIndex="4" />
                     <Label fx:id="lblZName" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
                     <Label fx:id="lblZEdition" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label fx:id="lblZCreator" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label fx:id="lblZBuildDate" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <Label fx:id="lblZStatus" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Label fx:id="lblZCompression" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   </children>
                 </GridPane>
               </children>

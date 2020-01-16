@@ -7,7 +7,7 @@ package com.phantomnat.n64toolbox.java.dao;
 
 /**
  *
- * @author Dorian Pilorge
+ * @author PhantomNatsu
  */
 public class RomDAO {
     

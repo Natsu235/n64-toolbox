@@ -40,7 +40,7 @@ public class RomController {
     private static N64Util N64Util = new N64Util();       // N64 Functions
     
     // Check if ROM is Loaded
-    public boolean isLoaded() {
+    protected boolean isLoaded() {
         boolean state = rom.getFile().exists() ? true : false;
         return state;
     }
@@ -496,7 +496,7 @@ public class RomController {
         Paint romCRCStatusColor = rom.getCRCStatusColor();
         
         if (romCRCStatusColor == null)
-            romCRCStatusColor = Color.BLACK;
+            romCRCStatusColor = Color.web("#333333");;
         
         return romCRCStatusColor;
     }
@@ -511,47 +511,91 @@ public class RomController {
     protected void loadEdition() throws IOException {
         String romFormat = rom.getFormat();
         RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r");
-        String romEdition = null;
+        String romZEdition = null;
         byte[] b1 = new byte[1];
         byte[] b2 = new byte[1];
         
         switch (romFormat) {
             case "n64":
-                // TODO
-            case "v64":
-                // TODO
-            case "z64":
-                
-        }
-        
-        /*
-        switch (romFormat) {
-            case "n64":
-                raf.seek(63);
+                raf.seek(13);
                 raf.readFully(b1);
-                raf.seek(62);
+                raf.seek(12);
                 raf.readFully(b2);
-                romCartID = new String(b1) + new String(b2);
+                romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
                 break;
             case "v64":
-                raf.seek(61);
+                raf.seek(15);
                 raf.readFully(b1);
-                raf.seek(60);
+                raf.seek(14);
                 raf.readFully(b2);
-                romCartID = new String(b1) + new String(b2);
+                romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
                 break;
             case "z64":
-                raf.seek(60);
+                raf.seek(14);
                 raf.readFully(b1);
-                raf.seek(61);
+                raf.seek(15);
                 raf.readFully(b2);
-                romCartID = new String(b1) + new String(b2);
+                romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
                 break;
         }
         
         raf.close();
-        rom.setCartID(romCartID);
-        */
+        romZ.setEdition(romZEdition);
+    }
+    
+    // Return Loaded ROM Edition (Type Zelda)
+    protected String getEdition() {
+        String romZEdition = romZ.getEdition();
+        
+        if (this.isZelda()) {
+            if (Objects.equals(romZEdition, "14 49") || Objects.equals(romZEdition, "14 4B"))
+                return "Nintendo 64";
+            else if (Objects.equals(romZEdition, "14 4C"))
+                return "Nintendo GameCube";
+            else
+                return Launcher.bundle.getString("invalid");
+        }
+        else
+            return Launcher.bundle.getString("unsupported");
+    }
+    
+    // Load ROM Compression (Type Zelda)
+    protected void loadCompression() {
+        long romSize = rom.getSize();
+        String romCRC = rom.getCRC();
+
+        if (romSize <= 33554432 || Objects.equals(romCRC, "9F C3 85 E5 3E CC 05 C7"))
+            romZ.setCompression(true);
+        else
+            romZ.setCompression(false);
+    }
+    
+    // Return Loaded ROM Compression (Type Zelda)
+    protected String getCompression() {
+        boolean romZCompression = romZ.getCompression();
+        
+        if (this.isZelda()) {
+            if (romZCompression == true) {
+                romZ.setCompressionColor(Color.CORAL);
+                return Launcher.bundle.getString("compressed");
+            }
+            else {
+                romZ.setCompressionColor(Color.CORNFLOWERBLUE);
+                return Launcher.bundle.getString("decompressed");
+            }
+        }
+        else
+            return Launcher.bundle.getString("unsupported");
+    }
+    
+    // Return Loaded ROM Compression Color (Type Zelda)
+    protected Paint getCompressionColor() {
+        Paint romCompressionColor = romZ.getCompressionColor();
+        
+        if (romCompressionColor == null || !this.isZelda())
+            romCompressionColor = Color.web("#333333");
+        
+        return romCompressionColor;
     }
     
     /*
