@@ -197,7 +197,7 @@ public class RomController {
                 break;
         }
         
-        raf.readFully(romMedia);
+        raf.read(romMedia);
         raf.close();
         rom.setMedia(new String(romMedia));
     }
@@ -227,32 +227,31 @@ public class RomController {
         String romCartID = null;
         byte[] b1 = new byte[1];
         byte[] b2 = new byte[1];
+        long p1 = 0;
+        long p2 = 0;
         
         switch (romFormat) {
             case "n64":
-                raf.seek(63);
-                raf.readFully(b1);
-                raf.seek(62);
-                raf.readFully(b2);
-                romCartID = new String(b1) + new String(b2);
+                p1 = 63;
+                p2 = 62;
                 break;
             case "v64":
-                raf.seek(61);
-                raf.readFully(b1);
-                raf.seek(60);
-                raf.readFully(b2);
-                romCartID = new String(b1) + new String(b2);
+                p1 = 61;
+                p2 = 60;
                 break;
             case "z64":
-                raf.seek(60);
-                raf.readFully(b1);
-                raf.seek(61);
-                raf.readFully(b2);
-                romCartID = new String(b1) + new String(b2);
+                p1 = 60;
+                p2 = 61;
                 break;
         }
         
+        raf.seek(p1);
+        raf.read(b1);
+        raf.seek(p2);
+        raf.read(b2);
         raf.close();
+        
+        romCartID = new String(b1) + new String(b2);
         rom.setCartID(romCartID);
     }
     
@@ -284,9 +283,8 @@ public class RomController {
                 break;
         }
         
-        raf.readFully(romRegion);
+        raf.read(romRegion);
         raf.close();
-        
         rom.setRegion(new String(romRegion));
     }
     
@@ -363,10 +361,15 @@ public class RomController {
     protected String getVersion() {
         String romVersion = rom.getVersion();
         
-        int upper = Character.getNumericValue(romVersion.charAt(0)) + 1;
-        int lower = Character.digit(romVersion.charAt(1), 16);
+        if (romVersion == null)
+            romVersion = Launcher.bundle.getString("invalid");
+        else {
+            int upper = Character.getNumericValue(romVersion.charAt(0)) + 1;
+            int lower = Character.digit(romVersion.charAt(1), 16);
+            romVersion = new String("v" + upper + "." + lower);
+        }
         
-        return new String("v" + upper + "." + lower);
+        return romVersion;
     }
     
     // Load ROM CIC
@@ -514,33 +517,38 @@ public class RomController {
         String romZEdition = null;
         byte[] b1 = new byte[1];
         byte[] b2 = new byte[1];
+        long p1 = 0;
+        long p2 = 0;
         
         switch (romFormat) {
             case "n64":
-                raf.seek(13);
-                raf.readFully(b1);
-                raf.seek(12);
-                raf.readFully(b2);
-                romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
+                p1 = 13;
+                p2 = 12;
                 break;
             case "v64":
-                raf.seek(15);
-                raf.readFully(b1);
-                raf.seek(14);
-                raf.readFully(b2);
-                romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
+                p1 = 15;
+                p2 = 14;
                 break;
             case "z64":
-                raf.seek(14);
-                raf.readFully(b1);
-                raf.seek(15);
-                raf.readFully(b2);
-                romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
+                p1 = 14;
+                p2 = 15;
                 break;
         }
         
+        raf.seek(p1);
+        raf.read(b1);
+        raf.seek(p2);
+        raf.read(b2);
         raf.close();
-        romZ.setEdition(romZEdition);
+        
+        romZEdition = N64Util.convertBytestoHex(b1) + " " + N64Util.convertBytestoHex(b2);
+        
+        if (Objects.equals(romZEdition, "14 49") || Objects.equals(romZEdition, "14 4B"))
+            romZ.setEdition("Nintendo 64");
+        else if (Objects.equals(romZEdition, "14 4C"))
+            romZ.setEdition("Nintendo GameCube");
+        else
+            romZ.setEdition(null);
     }
     
     // Return Loaded ROM Edition (Type Zelda)
@@ -548,15 +556,43 @@ public class RomController {
         String romZEdition = romZ.getEdition();
         
         if (this.isZelda()) {
-            if (Objects.equals(romZEdition, "14 49") || Objects.equals(romZEdition, "14 4B"))
-                return "Nintendo 64";
-            else if (Objects.equals(romZEdition, "14 4C"))
-                return "Nintendo GameCube";
-            else
-                return Launcher.bundle.getString("invalid");
+            if (romZEdition == null)
+                romZEdition = Launcher.bundle.getString("invalid");
         }
         else
-            return Launcher.bundle.getString("unsupported");
+            romZEdition = Launcher.bundle.getString("unsupported");
+        
+        return romZEdition;
+    }
+    
+    // Load ROM Creator (Type Zelda)
+    protected void loadCreator() throws IOException {
+        File romFile = rom.getFile();
+        String romFormat = rom.getFormat();
+        byte[] romZCreator = N64Util.readFileToBytes(romFile, 28672, 151552);
+        String romZEdition = romZ.getEdition();
+        int offset = new String(romZCreator).indexOf("zelda@") + 28672;
+        
+        if (offset != -1 && Objects.equals(romFormat, "z64")) {
+            if (Objects.equals(romZEdition, "Nintendo 64"))
+                romZ.setCreator(new String(N64Util.readFileToBytes(romFile, offset, 11)));
+            else if (Objects.equals(romZEdition, "Nintendo GameCube"))
+                romZ.setCreator(new String (N64Util.readFileToBytes(romFile, offset, 13)));
+        }
+    }
+    
+    // Return Loaded ROM Creator (Type Zelda)
+    protected String getCreator() {
+        String romZCreator = romZ.getCreator();
+        
+        if (this.isZelda()) {
+            if (romZCreator == null)
+                romZCreator = Launcher.bundle.getString("invalid");
+        }
+        else
+            romZCreator = Launcher.bundle.getString("unsupported");
+        
+        return romZCreator;
     }
     
     // Load ROM Compression (Type Zelda)
@@ -604,6 +640,62 @@ public class RomController {
      * ==========================
      */
     
+    // Load ROM Specified Header Parameter
+    protected void loadHeader(String param) throws java.lang.Exception {
+        File romFile = rom.getFile();
+        String romFormat = rom.getFormat();
+        byte[] romHeader;
+        int offset = 0;
+        int length = 0;
+        
+        switch (param) {
+            case "byteFormat":
+                offset = 0;
+                length = 4;
+                break;
+            case "clockRate":
+                offset = 4;
+                length = 4;
+                break;
+            case "programCounter":
+                offset = 8;
+                length = 4;
+                break;
+            case "releaseAddress":
+                offset = 12;
+                length = 4;
+                break;
+        }
+        
+        romHeader = N64Util.readFileToBytes(romFile, offset, length);
+        String setter = "set" + param.substring(0, 1).toUpperCase() + param.substring(1);
+        
+        if (param != "byteFormat") {
+            switch (romFormat) {
+                case "n64":
+                    rom.getClass().getMethod(setter, String.class).invoke(rom, new Object[]{"0x" + N64Util.convertN64toZ64(N64Util.convertBytestoHex(romHeader), true).replaceAll("\\s+", "")});
+                case "v64":
+                    rom.getClass().getMethod(setter, String.class).invoke(rom, new Object[]{"0x" + N64Util.convertV64toZ64(N64Util.convertBytestoHex(romHeader), true).replaceAll("\\s+", "")});
+                case "z64":
+                    rom.getClass().getMethod(setter, String.class).invoke(rom, new Object[]{"0x" + N64Util.convertBytestoHex(romHeader).replaceAll("\\s+", "")});
+            }
+        }
+        else if (param == "byteFormat") {
+            rom.setByteFormat("0x" + N64Util.convertBytestoHex(romHeader).replaceAll("\\s+", ""));
+        }
+    }
+    
+    // Return Loaded ROM Specified Header Parameter
+    protected String getHeader(String param) throws java.lang.Exception {
+        String getter = "get" + param.substring(0, 1).toUpperCase() + param.substring(1);
+        String romHeader = (String) rom.getClass().getMethod(getter).invoke(rom);
+        
+        if (romHeader == null)
+            romHeader = Launcher.bundle.getString("invalid");
+        
+        return romHeader;
+    }
+    
     // Load ROM Specified Checksum
     protected void loadChecksum(String hash) throws IOException {
         InputStream is = new FileInputStream(rom.getFile());
@@ -636,8 +728,8 @@ public class RomController {
         return Launcher.bundle.getString("invalid");
     }
     
-    // Save Loaded ROM Infos
-    protected void saveData() throws IOException {
+    // Save Loaded ROM Informations
+    protected void saveData() throws java.lang.Exception {
         String fileName = rom.getFile().getName();
         File data = new File("dump/" + FilenameUtils.removeExtension(fileName) + ".txt");
         
@@ -677,12 +769,14 @@ public class RomController {
         //pw.println("Rom Status:                 " + lblZStatus.getText());
         //pw.println("Rom Creator:                " + lblZCreator.getText());
         //pw.println("Rom Build Date:             " + lblZBuildDate.getText());
-        //pw.println("");
-        //pw.println(">> Header Informations");
-        //pw.println("Rom Byte Format:            " + lblByteFormat.getText());
-        //pw.println("Rom Clock Rate Override:    " + lblClockRateOver.getText());
-        //pw.println("Rom Program Counter:        " + lblProgramCounter.getText());
-        //pw.println("Rom Release Address:        " + lblReleaseAddress.getText());
+        pw.println("");
+        pw.println("---------------------");
+        pw.println(" HEADER INFORMATIONS");
+        pw.println("---------------------");
+        pw.println("Rom Byte Format:            " + this.getHeader("byteFormat"));
+        pw.println("Rom Clock Rate Override:    " + this.getHeader("clockRate"));
+        pw.println("Rom Program Counter:        " + this.getHeader("programCounter"));
+        pw.println("Rom Release Address:        " + this.getHeader("releaseAddress"));
         pw.println("");
         pw.println("------------------------");
         pw.println(" CHECKSUMS INFORMATIONS");
@@ -692,7 +786,7 @@ public class RomController {
         pw.close();
     }
     
-    // Print Loaded ROM Infos
+    // Output Loaded ROM Informations (Debug Mode)
     protected void debug() throws IOException {
         System.out.println("- GENERAL INFORMATIONS -");
         System.out.println("Filename:            " + FilenameUtils.removeExtension(rom.getFile().getName()));
@@ -705,6 +799,12 @@ public class RomController {
         System.out.println("Rom Version:         " + rom.getVersion());
         System.out.println("Rom CIC:             " + rom.getCIC());
         System.out.println("Rom CRC:             " + rom.getCRC());
+        System.out.println("");
+        System.out.println("- HEADER INFORMATIONS -");
+        System.out.println("Rom Byte Format:     " + rom.getByteFormat());
+        System.out.println("Rom Clock Rate:      " + rom.getClockRate());
+        System.out.println("Rom Program Counter: " + rom.getProgramCounter());
+        System.out.println("Rom Release Address: " + rom.getReleaseAddress());
         System.out.println("");
         System.out.println("- CHECKSUMS INFORMATIONS -");
         System.out.println("MD5:                 " + this.getChecksum("md5"));

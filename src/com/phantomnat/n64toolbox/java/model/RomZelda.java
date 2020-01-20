@@ -23,8 +23,8 @@ public class RomZelda extends Rom {
     
     public RomZelda() {}
     
-    public RomZelda(File file, String format, long size, String name, String media, String cartID, String region, String version, String CIC, String CRC, String CRCStatus, Paint CRCStatusColor, String MD5, String SHA1, String realName, String edition, String creator, String build, boolean compression, Paint compressionColor) {
-        super(file, format, size, name, media, cartID, region, version, CIC, CRC, CRCStatus, CRCStatusColor, MD5, SHA1);
+    public RomZelda(File file, String format, long size, String name, String media, String cartID, String region, String version, String CIC, String CRC, String CRCStatus, Paint CRCStatusColor, String byteFormat, String clockRate, String programCounter, String releaseAddress, String CRC1, String CRC2, String MD5, String SHA1, String realName, String edition, String creator, String build, boolean compression, Paint compressionColor) {
+        super(file, format, size, name, media, cartID, region, version, CIC, CRC, CRCStatus, CRCStatusColor, byteFormat, clockRate, programCounter, releaseAddress, CRC1, CRC2, MD5, SHA1);
         this.realName = realName;
         this.edition = edition;
         this.creator = creator;

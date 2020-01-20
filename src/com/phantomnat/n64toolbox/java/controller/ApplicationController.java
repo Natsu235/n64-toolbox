@@ -51,11 +51,11 @@ public class ApplicationController implements Initializable {
     @FXML
     private ImageView imgAvatar;
     @FXML
-    private Label lblFilename, lblFiletype, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus;
+    private Label lblFileName, lblFileType, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus;
     @FXML
     private Label lblZName, lblZEdition, lblZCreator, lblZBuildDate, lblZCompression;
     @FXML
-    private Label lblByteFormat, lblClockRateOver, lblProgramCounter, lblReleaseAddress, lblCRC1, lblCRC2, lblMD5, lblSHA1;
+    private Label lblByteFormat, lblClockRate, lblProgramCounter, lblReleaseAddress, lblCRC1, lblCRC2, lblMD5, lblSHA1;
     @FXML
     private Label lblPrjTitle, lblPrjVersion, lblPrjCreator, lblPrjJavaFX;
     
@@ -153,40 +153,34 @@ public class ApplicationController implements Initializable {
     }
     
     // Load ROM Informations
-    private void load() {
-        String[] loaders = {"loadFormat", "loadSize", "loadName", "loadMedia", "loadCartID", "loadRegion", "loadVersion", "loadCIC", "loadCRC", "loadCRCStatus", "loadEdition", "loadCompression", "loadChecksum", "loadChecksum"};
-        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, "md5", "sha1"};
-        try {
-            for (int i = 0; i < loaders.length; i++) {
-                if (args[i] != null)
-                    romCtrl.getClass().getDeclaredMethod(loaders[i], String.class).invoke(romCtrl, new Object[]{args[i]});
-                else
-                    romCtrl.getClass().getDeclaredMethod(loaders[i]).invoke(romCtrl);
-            }
-        }
-        catch (java.lang.Exception ex) {
-            Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+    private void load() throws java.lang.Exception {
+        // Methods to load Rom Infos
+        String[] loaders = {"loadFormat", "loadSize", "loadName", "loadMedia", "loadCartID", "loadRegion", "loadVersion", "loadCIC", "loadCRC", "loadCRCStatus", "loadEdition", "loadCreator", "loadCompression", "loadHeader", "loadHeader", "loadHeader", "loadHeader", "loadChecksum", "loadChecksum"};
+        // Parameters passed to the methods
+        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "md5", "sha1"};
+        for (int i = 0; i < loaders.length; i++) {
+            if (args[i] != null)
+                romCtrl.getClass().getDeclaredMethod(loaders[i], String.class).invoke(romCtrl, new Object[]{args[i]});
+            else
+                romCtrl.getClass().getDeclaredMethod(loaders[i]).invoke(romCtrl);
         }
     }
     
     // Display ROM Informations
-    private void show() throws IOException {
-        String[] getters = {"getFormat", "getSize", "getName", "getMedia", "getCartID", "getRegion", "getVersion", "getCIC", "getCRC", "getCRCStatus", "getEdition", "getCompression", "getChecksum", "getChecksum"};
-        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, "md5", "sha1"};
-        Label[] labels = {lblFiletype, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus, lblZEdition, lblZCompression, lblMD5, lblSHA1};
+    private void show() throws java.lang.Exception {
+        // Methods to retrieve Rom Infos
+        String[] getters = {"getFormat", "getSize", "getName", "getMedia", "getCartID", "getRegion", "getVersion", "getCIC", "getCRC", "getCRCStatus", "getEdition", "getCreator", "getCompression", "getHeader", "getHeader", "getHeader", "getHeader", "getChecksum", "getChecksum"};
+        // Parameters passed to the methods
+        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "md5", "sha1"};
+        Label[] labels = {lblFileType, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus, lblZEdition, lblZCreator, lblZCompression, lblByteFormat, lblClockRate, lblProgramCounter, lblReleaseAddress, lblMD5, lblSHA1};
         
-        lblFilename.setText(romCtrl.getFile().getName());
+        lblFileName.setText(romCtrl.getFile().getName());
         
-        try {
-            for (int i = 0; i < getters.length; i++) {
-                if (args[i] != null)
-                    labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i], String.class).invoke(romCtrl, new Object[]{args[i]}));
-                else
-                    labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i]).invoke(romCtrl));
-            }
-        }
-        catch (java.lang.Exception ex) {
-            Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+        for (int i = 0; i < getters.length; i++) {
+            if (args[i] != null)
+                labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i], String.class).invoke(romCtrl, new Object[]{args[i]}));
+            else
+                labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i]).invoke(romCtrl));
         }
         
         lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());

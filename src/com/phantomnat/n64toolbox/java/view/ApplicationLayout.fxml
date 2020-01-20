@@ -27,17 +27,17 @@
         </ImageView>
         <Button fx:id="btnOpen" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#open" prefHeight="30.0" prefWidth="100.0" text="%open">
           <font>
-            <Font name="Segoe UI Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
           </font>
         </Button>
         <Button fx:id="btnSave" disable="true" layoutX="448.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="100.0" text="%save">
           <font>
-            <Font name="Segoe UI Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
           </font>
         </Button>
         <Button fx:id="btnExit" layoutX="533.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="100.0" text="%exit">
           <font>
-            <Font name="Segoe UI Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
           </font>
         </Button>
       </buttons>
@@ -81,8 +81,8 @@
                     <Label text="%romCIC" GridPane.rowIndex="8" />
                     <Label text="%romCRC" GridPane.rowIndex="9" />
                     <Label text="%romCRCStatus" GridPane.rowIndex="10" />
-                    <Label fx:id="lblFilename" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
-                    <Label fx:id="lblFiletype" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label fx:id="lblFileName" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
+                    <Label fx:id="lblFileType" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label fx:id="lblSize" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label fx:id="lblName" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label fx:id="lblMedia" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -154,7 +154,7 @@
                   </rowConstraints>
                   <children>
                     <Label text="%romByteFormat" />
-                    <Label text="%romClockRateOver" GridPane.rowIndex="1" />
+                    <Label text="%romClockRate" GridPane.rowIndex="1" />
                     <Label text="%romProgramCounter" GridPane.rowIndex="2" />
                     <Label text="%romReleaseAddress" GridPane.rowIndex="3" />
                     <Label text="%romCRC1" GridPane.rowIndex="4" />
@@ -162,7 +162,7 @@
                     <Label text="%romMD5" GridPane.rowIndex="7" />
                     <Label text="%romSHA1" GridPane.rowIndex="8" />
                     <Label fx:id="lblByteFormat" style="-fx-font-weight: bold;" GridPane.columnIndex="1" />
-                    <Label fx:id="lblClockRateOver" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label fx:id="lblClockRate" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Label fx:id="lblProgramCounter" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label fx:id="lblReleaseAddress" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <Label fx:id="lblCRC1" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
