@@ -20,9 +20,9 @@ public class Message {
     // Configuration
     private Configuration config = new Configuration();
     
-    protected String title;
-    protected String message;
-    protected AlertType type;
+    private String title;
+    private String message;
+    private AlertType type;
     
     public Message() {}
     

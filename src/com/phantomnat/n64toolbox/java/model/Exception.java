@@ -25,9 +25,9 @@ public class Exception {
     // Configuration
     private Configuration config = new Configuration();
     
-    protected String title;
-    protected String message;
-    protected String error;
+    private String title;
+    private String message;
+    private String error;
     
     public Exception() {}
     
@@ -38,7 +38,7 @@ public class Exception {
         createException(exception);
     }
     
-    // Throw a new Exception
+    // Display an Exception
     final private void createException(java.lang.Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(this.title);
@@ -46,33 +46,34 @@ public class Exception {
         alert.setHeaderText(this.message);
         alert.setContentText(this.error);
         alert.getDialogPane().setMinSize(460, 200);
-
+        
         // Create Expandable Exception
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         String exception = sw.toString();
-
+        
         Label blank = new Label("");
         Label label = new Label("The exception stacktrace was:");
-
+        
         TextArea textArea = new TextArea(exception);
         textArea.setEditable(false);
         textArea.setWrapText(true);
-
+        
         textArea.setMaxWidth(Double.MAX_VALUE);
         textArea.setMaxHeight(Double.MAX_VALUE);
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
-
+        
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
         expContent.add(blank, 0, 0);
         expContent.add(label, 0, 1);
         expContent.add(textArea, 0, 2);
-
+        
         // Set Expandable Exception Dialog Pane
         alert.getDialogPane().setExpandableContent(expContent);
         alert.showAndWait();
     }
+    
 }
