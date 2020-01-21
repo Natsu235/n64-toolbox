@@ -10,8 +10,8 @@ import com.phantomnat.n64toolbox.java.model.Configuration;
 import com.phantomnat.n64toolbox.java.model.Exception;
 import com.phantomnat.n64toolbox.java.model.Message;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -33,9 +33,6 @@ public class ApplicationController implements Initializable {
     
     // Configuration
     private static Configuration config = new Configuration();
-    
-    // Exception Handler
-    private static Exception except = new Exception();
     
     // Controllers
     private static RomController romCtrl = new RomController();
@@ -61,12 +58,12 @@ public class ApplicationController implements Initializable {
     
     @FXML
     // Open a ROM
-    private void open(ActionEvent event) throws IOException {
+    private void open(ActionEvent event) {
         Stage stage = (Stage) btnOpen.getScene().getWindow();
         
         // Select a ROM
         FileChooser fc = new FileChooser();
-        if (config.getRomDirectory() != null)
+        if (config.getRomDirectory() != null && Files.exists(config.getRomDirectory().toPath()))
             fc.setInitialDirectory(config.getRomDirectory());
         fc.setTitle(bundle.getString("openRom"));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(bundle.getString("n64Roms"), "*.n64; *.v64; *.z64"));
@@ -112,7 +109,7 @@ public class ApplicationController implements Initializable {
         try {
             romCtrl.saveData();
         }
-        catch (IOException ex) {
+        catch (java.lang.Exception ex) {
             Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
         }
         Message msgBox = new Message(bundle.getString("romInfosSaved"), bundle.getString("romInfosSavedText"), Alert.AlertType.INFORMATION);

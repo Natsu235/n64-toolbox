@@ -35,9 +35,9 @@ public class RomController {
     private static Configuration config = new Configuration();
     
     // Models
-    private static Rom rom = new Rom();                   // Loaded ROM
-    private static RomZelda romZ = new RomZelda();        // Loaded ROM (Type Zelda)
-    private static N64Util N64Util = new N64Util();       // N64 Functions
+    private static Rom rom = new Rom();                // Loaded ROM
+    private static RomZelda romZ = new RomZelda();     // Loaded ROM (Type Zelda)
+    private static N64Util N64Util = new N64Util();    // N64 Functions
     
     // Check if ROM is Loaded
     protected boolean isLoaded() {
