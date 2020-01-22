@@ -9,12 +9,14 @@ package com.phantomnat.n64toolbox.java.model;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class Build {
     
-    protected static String title = "N64 Toolbox";
-    protected static String version = "1.0";
-    protected static String creator = "PhantomNatsu";
-    protected static String javafx = "8";
+    private static String title = "N64 Toolbox";
+    private static String version = "1.0";
+    private static String creator = "PhantomNatsu";
+    private static String javafx = "8";
     
     public Build() {}
     

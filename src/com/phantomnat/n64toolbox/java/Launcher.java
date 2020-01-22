@@ -26,26 +26,33 @@ import org.ini4j.Ini;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class Launcher extends Application {
     
     // Configuration
-    private static Configuration config = new Configuration();
-    private static Ini options = new Ini();
+    private static final Configuration config = new Configuration();
+    private static final Ini options = new Ini();
     
     // Models
-    private static Build build = new Build();
+    private static final Build build = new Build();
     
     // Defined Language
     public static ResourceBundle bundle;
     
     @Override
     // On Application Openning
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         
-        // Read Configuration
+        // Load Configuration
         File configFile = new File(config.getConfigPath());
         if (configFile.exists()) {
-            options.load(new FileReader(config.getConfigPath()));
+            try {
+                options.load(new FileReader(config.getConfigPath()));
+            }
+            catch (IOException ex) {
+                Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+            }
             config.setWidth(options.get("Window", "Width", double.class));
             config.setHeight(options.get("Window", "Height", double.class));
             config.setResizable(options.get("Window", "IsResizable", boolean.class));
@@ -53,10 +60,19 @@ public class Launcher extends Application {
             config.setRomDirectory(options.get("Local", "RomDirectory", File.class));
         }
         
+        // Load Language
         bundle = ResourceBundle.getBundle("com.phantomnat.n64toolbox.resources.bundles.language", config.getLanguage());
-        Parent root = FXMLLoader.load(getClass().getResource("view/ApplicationLayout.fxml"), bundle);
-        Image icon = new Image(getClass().getResource(config.getIcon()).toString());
         
+        // Load Interface
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("view/ApplicationLayout.fxml"), bundle);
+        }
+        catch (IOException ex) {
+            Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+        }
+        
+        Image icon = new Image(getClass().getResource(config.getIcon()).toString());
         Scene scene = new Scene(root, config.getWidth(), config.getHeight());
         stage.setScene(scene);
         stage.setTitle(build.getTitle() + " " + build.getVersion());
@@ -67,7 +83,7 @@ public class Launcher extends Application {
     
     @Override
     // On Application Closing
-    public void stop() throws IOException {
+    public void stop() {
         
         // Save Configuration
         options.put("Window", "Width", config.getWidth());
@@ -78,7 +94,7 @@ public class Launcher extends Application {
         try {
             options.store(new FileOutputStream(config.getConfigPath()));
         }
-        catch (java.lang.Exception ex) {
+        catch (IOException ex) {
             Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
         }
     }

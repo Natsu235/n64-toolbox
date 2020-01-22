@@ -12,6 +12,8 @@ import javafx.scene.paint.Paint;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class RomZelda extends Rom {
     
     private static String realName;

@@ -12,6 +12,8 @@ import javafx.scene.paint.Paint;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class Rom {
     
     private static File file;

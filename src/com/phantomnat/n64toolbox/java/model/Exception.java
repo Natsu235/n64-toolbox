@@ -20,14 +20,16 @@ import javafx.stage.Stage;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class Exception {
     
     // Configuration
-    private Configuration config = new Configuration();
+    private static final Configuration config = new Configuration();
     
-    private String title;
-    private String message;
-    private String error;
+    private static String title;
+    private static String message;
+    private static String error;
     
     public Exception() {}
     
@@ -39,7 +41,7 @@ public class Exception {
     }
     
     // Display an Exception
-    final private void createException(java.lang.Exception e) {
+    private void createException(java.lang.Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(this.title);
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image(config.getIcon()));

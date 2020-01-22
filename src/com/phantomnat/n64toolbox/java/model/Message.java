@@ -15,14 +15,16 @@ import javafx.stage.Stage;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class Message {
     
     // Configuration
-    private Configuration config = new Configuration();
+    private static final Configuration config = new Configuration();
     
-    private String title;
-    private String message;
-    private AlertType type;
+    private static String title;
+    private static String message;
+    private static AlertType type;
     
     public Message() {}
     
@@ -34,7 +36,7 @@ public class Message {
     }
     
     // Display a Message Box
-    final private void createMessage() {
+    private void createMessage() {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image(config.getIcon()));

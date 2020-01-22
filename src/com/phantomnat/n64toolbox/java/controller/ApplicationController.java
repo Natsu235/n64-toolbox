@@ -29,16 +29,18 @@ import javafx.stage.Stage;
  *
  * @author PhantomNatsu
  */
+@SuppressWarnings("AccessStaticViaInstance")
+
 public class ApplicationController implements Initializable {
     
     // Configuration
-    private static Configuration config = new Configuration();
+    private static final Configuration config = new Configuration();
     
     // Controllers
-    private static RomController romCtrl = new RomController();
+    private static final RomController romCtrl = new RomController();
     
     // Models
-    private static Build build = new Build();    // Build Infos
+    private static final Build build = new Build();    // Build Infos
     
     // Defined Language
     private static ResourceBundle bundle;
@@ -182,6 +184,7 @@ public class ApplicationController implements Initializable {
         
         lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());
         lblZCompression.setTextFill(romCtrl.getCompressionColor());
+        //romCtrl.debug();
     }
     
     @Override
