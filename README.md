@@ -1,9 +1,7 @@
 # N64 Toolbox
 A user-friendly Java application to display basic informations about N64 Roms.
 
-<p align="center">
-  <kbd><img width="520" height="373" src="assets/images/n64-toolbox-app-02.png" /></kbd>
-</p>
+<kbd><img width="520" height="373" src="assets/images/n64-toolbox-app-02.png" /></kbd>
 
 ## Prerequisites ##
 List of all required dependencies to build this software:
