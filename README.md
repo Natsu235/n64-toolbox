@@ -1,7 +1,9 @@
 # N64 Toolbox
 A user-friendly Java application to display basic informations about N64 Roms.
 
-![N64 Toolbox App](assets/images/n64-toolbox-app-02.png)
+<p align="center">
+  <kbd><img width="520" height="373" src="assets/images/n64-toolbox-app-02.png" /></kbd>
+</p>
 
 ## Prerequisites ##
 List of all required dependencies to build this software:
@@ -12,7 +14,7 @@ List of all required dependencies to build this software:
 To successfully build this project:
 * First open the project folder in Netbeans IDE 8.2.
 * Then, right-click on the project in the *Projects* window to display the context menu.
-* Select *Clean and Build* and wait until the console output a **BUILD SUCCESSFUL** message.
+* Select *Clean and Build* and wait until the console output a '**BUILD SUCCESSFUL**' message.
 * The compiled application can be found inside the *dist* folder.
 
 If something went wrong during this process, you can still submit a new issue to the project.
