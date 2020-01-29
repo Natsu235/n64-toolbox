@@ -24,7 +24,7 @@ import org.ini4j.Ini;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 @SuppressWarnings("AccessStaticViaInstance")
 
@@ -53,11 +53,11 @@ public class Launcher extends Application {
             catch (IOException ex) {
                 Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
             }
+            config.setRomDirectory(options.get("Local", "RomDirectory", File.class));
+            config.setLanguage(new Locale(options.get("Local", "Language", String.class)));
             config.setWidth(options.get("Window", "Width", double.class));
             config.setHeight(options.get("Window", "Height", double.class));
             config.setResizable(options.get("Window", "IsResizable", boolean.class));
-            config.setLanguage(new Locale(options.get("Local", "Language", String.class)));
-            config.setRomDirectory(options.get("Local", "RomDirectory", File.class));
         }
         
         // Load Language
@@ -86,11 +86,11 @@ public class Launcher extends Application {
     public void stop() {
         
         // Save Configuration
+        options.put("Local", "RomDirectory", config.getRomDirectory());
+        options.put("Local", "Language", config.getLanguage());
         options.put("Window", "Width", config.getWidth());
         options.put("Window", "Height", config.getHeight());
         options.put("Window", "IsResizable", config.getResizable());
-        options.put("Local", "Language", config.getLanguage());
-        options.put("Local", "RomDirectory", config.getRomDirectory());
         try {
             options.store(new FileOutputStream(config.getConfigPath()));
         }

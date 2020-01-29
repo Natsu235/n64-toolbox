@@ -27,7 +27,7 @@ import org.apache.commons.io.FilenameUtils;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 @SuppressWarnings("AccessStaticViaInstance")
 
@@ -381,55 +381,50 @@ public class RomController {
     // Load ROM CIC
     protected void loadCIC() throws IOException {
         String romFormat = rom.getFormat();
-        InputStream is1 = this.getClass().getResourceAsStream(config.getCIC6101());
-        InputStream is2 = this.getClass().getResourceAsStream(config.getCIC6102());
-        InputStream is3 = this.getClass().getResourceAsStream(config.getCIC6103());
-        InputStream is5 = this.getClass().getResourceAsStream(config.getCIC6105());
-        InputStream is6 = this.getClass().getResourceAsStream(config.getCIC6106());
-        
         byte[] romCIC = N64Util.readFileToBytes(rom.getFile(), 64, 4032);
-        byte[] CIC6101, CIC6102, CIC6103, CIC6105, CIC6106;
-        CIC6101 = N64Util.readStreamToBytes(is1, 0, is1.available());
-        CIC6102 = N64Util.readStreamToBytes(is2, 0, is2.available());
-        CIC6103 = N64Util.readStreamToBytes(is3, 0, is3.available());
-        CIC6105 = N64Util.readStreamToBytes(is5, 0, is5.available());
-        CIC6106 = N64Util.readStreamToBytes(is6, 0, is6.available());
+        byte[][] bootcodes = new byte[4][];
+        String[] cic = {"6101-CIC", "6102-CIC", "6103-CIC", "6105-CIC", "6106-CIC"};
+        InputStream[] is = new InputStream[4];
+        for (int i = 0; i < is.length; i++) {
+            is[i] = this.getClass().getResourceAsStream(config.getCICPath(cic[i]));
+            bootcodes[i] = N64Util.readStreamToBytes(is[i], 0, is[i].available());
+        }
         
         switch (romFormat) {
             case "n64":
-                if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6101)))
+                if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[0])))
                     rom.setCIC("CIC-NUS-6101");
-                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6102)))
+                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[1])))
                     rom.setCIC("CIC-NUS-6102");
-                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6103)))
+                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[2])))
                     rom.setCIC("CIC-NUS-6103");
-                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6105)))
+                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[3])))
                     rom.setCIC("CIC-NUS-6105");
-                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6106)))
+                else if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[4])))
                     rom.setCIC("CIC-NUS-6106");
                 break;
             case "v64":
-                if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6101)))
+                if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[0])))
                     rom.setCIC("CIC-NUS-6101");
-                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6102)))
+                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[1])))
                     rom.setCIC("CIC-NUS-6102");
-                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6103)))
+                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[2])))
                     rom.setCIC("CIC-NUS-6103");
-                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6105)))
+                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[3])))
                     rom.setCIC("CIC-NUS-6105");
-                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(CIC6106)))
+                else if (Objects.equals(N64Util.convertV64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[4])))
                     rom.setCIC("CIC-NUS-6106");
                 break;
             case "z64":
-                if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6101)))
+                if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(bootcodes[0])))
                     rom.setCIC("CIC-NUS-6101");
-                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6102)))
+                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(bootcodes[1])))
                     rom.setCIC("CIC-NUS-6102");
-                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6103)))
+                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(bootcodes[2])))
                     rom.setCIC("CIC-NUS-6103");
-                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6105)))
+                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(bootcodes[3])))
                     rom.setCIC("CIC-NUS-6105");
-                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(CIC6106)))
+                else if (Objects.equals(N64Util.convertBytestoHex(romCIC), N64Util.convertBytestoHex(bootcodes[4])))
                     rom.setCIC("CIC-NUS-6106");
                 break;
         }

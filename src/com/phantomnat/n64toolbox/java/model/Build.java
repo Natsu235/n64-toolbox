@@ -7,7 +7,7 @@ package com.phantomnat.n64toolbox.java.model;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 @SuppressWarnings("AccessStaticViaInstance")
 

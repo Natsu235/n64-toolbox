@@ -15,7 +15,7 @@ import java.util.Objects;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 public class N64Util {
     

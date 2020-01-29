@@ -7,8 +7,8 @@ package com.phantomnat.n64toolbox.java.dao;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 public class RomDAO {
-    
+    // TODO: Generate methods
 }

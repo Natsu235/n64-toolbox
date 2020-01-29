@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 public class DatabaseConnection {
     

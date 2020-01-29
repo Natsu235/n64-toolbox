@@ -5,7 +5,6 @@
  */
 package com.phantomnat.n64toolbox.java.model;
 
-import com.phantomnat.n64toolbox.java.model.Configuration;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javafx.scene.control.Alert;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 @SuppressWarnings("AccessStaticViaInstance")
 

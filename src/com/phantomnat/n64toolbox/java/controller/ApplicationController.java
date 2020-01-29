@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 @SuppressWarnings("AccessStaticViaInstance")
 

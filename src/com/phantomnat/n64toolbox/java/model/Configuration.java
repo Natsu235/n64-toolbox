@@ -10,48 +10,42 @@ import java.util.Locale;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 public class Configuration {
     
+    private static File romDir;
     private static String cfgPath = "config.ini";
+    private static String cicPath = "/com/phantomnat/n64toolbox/resources/bootcodes/";
+    private static String crcList = "/com/phantomnat/n64toolbox/resources/checksums/N64-CRC-Database.txt";
+    private static String appIcon = "/com/phantomnat/n64toolbox/resources/images/n64-icon.png";
+    private static Locale appLang = Locale.ENGLISH;
     private static double width = 720;
     private static double height = 480;
     private static boolean resizable = true;
-    private static String appIcon = "/com/phantomnat/n64toolbox/resources/images/n64-icon.png";
-    private static Locale appLang = Locale.ENGLISH;
-    private static File romDir;
-    
-    private static String CIC6101 = "/com/phantomnat/n64toolbox/resources/files/6101-CIC.bin";
-    private static String CIC6102 = "/com/phantomnat/n64toolbox/resources/files/6102-CIC.bin";
-    private static String CIC6103 = "/com/phantomnat/n64toolbox/resources/files/6103-CIC.bin";
-    private static String CIC6105 = "/com/phantomnat/n64toolbox/resources/files/6105-CIC.bin";
-    private static String CIC6106 = "/com/phantomnat/n64toolbox/resources/files/6106-CIC.bin";
-    private static String CRCList = "/com/phantomnat/n64toolbox/resources/files/N64-CRC-Database.txt";
     
     public Configuration() {}
     
     // Getters
+    public static File getRomDirectory() { return romDir; }
     public static String getConfigPath() { return cfgPath; }
+    public static String getCICPath(String bootcode) { return cicPath + bootcode + ".bin"; }
+    public static String getCRCList() { return crcList; }
+    public static String getIcon() { return appIcon; }
+    public static Locale getLanguage() { return appLang; }
     public static double getWidth() { return width; }
     public static double getHeight() { return height; }
     public static boolean getResizable() { return resizable; }
-    public static String getIcon() { return appIcon; }
-    public static Locale getLanguage() { return appLang; }
-    public static File getRomDirectory() { return romDir; }
-    
-    public static String getCIC6101() { return CIC6101; }
-    public static String getCIC6102() { return CIC6102; }
-    public static String getCIC6103() { return CIC6103; }
-    public static String getCIC6105() { return CIC6105; }
-    public static String getCIC6106() { return CIC6106; }
-    public static String getCRCList() { return CRCList; }
     
     // Setters
+    public void setRomDirectory(File romDir) { this.romDir = romDir; }
+    //public void getConfigPath(String cfgPath) { this.cfgPath = cfgPath; }
+    //public void getCICPath(String cicPath) { this.cicPath = cicPath; }
+    //public void getCRCList(String crcList) { this.crcList = crcList; }
+    //public void setIcon(String appIcon) { this.appIcon = appIcon; }
+    public void setLanguage(Locale appLang) { this.appLang = appLang; }
     public void setWidth(double width) { this.width = width; }
     public void setHeight(double height) { this.height = height; }
     public void setResizable(boolean resizable) { this.resizable = resizable; }
-    public void setLanguage(Locale appLang) { this.appLang = appLang; }
-    public void setRomDirectory(File romDir) { this.romDir = romDir; }
     
 }

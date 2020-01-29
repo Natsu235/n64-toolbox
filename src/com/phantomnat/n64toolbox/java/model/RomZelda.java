@@ -10,7 +10,7 @@ import javafx.scene.paint.Paint;
 
 /**
  *
- * @author PhantomNatsu
+ * @author Dorian Pilorge
  */
 @SuppressWarnings("AccessStaticViaInstance")
 
