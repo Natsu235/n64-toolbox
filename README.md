@@ -24,7 +24,7 @@ If something went wrong during this process, you can still submit a new issue to
 ### Trello
 [Trello](https://trello.com/) is a web-based project management application allowing tasks scheduling during the development.
 
-Trello for *N64 Toolbox* : https://trello.com/b/PPUtJUie/n64-toolbox
+<a href="https://trello.com/b/PPUtJUie/n64-toolbox"><img width="180" height="89" src="assets/images/n64-toolbox-thumb.png" /></a>
 
 ### Liscence
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
