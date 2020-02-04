@@ -26,5 +26,5 @@ If something went wrong during this process, you can still submit a new issue to
 
 <a href="https://trello.com/b/PPUtJUie/n64-toolbox" target="_blank"><img width="180" height="89" src="assets/images/n64-toolbox-thumb.png" /></a>
 
-### Liscence
+### Licence
 This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.
