@@ -32,32 +32,32 @@ import org.apache.commons.io.FilenameUtils;
 @SuppressWarnings("AccessStaticViaInstance")
 
 public class RomController {
-    
+
     // Configuration
     private static final Configuration config = new Configuration();
-    
+
     // Models
     private static final Rom rom = new Rom();                // Loaded ROM
     private static final RomZelda romZ = new RomZelda();     // Loaded ROM (Type Zelda)
     private static final N64Util N64Util = new N64Util();    // N64 Functions
-    
+
     // Check if ROM is Loaded
     protected boolean isLoaded() {
         boolean state = rom.getFile().exists();
         return state;
     }
-    
+
     // Check if ROM is Valid
     protected boolean isValid() throws FileNotFoundException, IOException {
         String fileName = rom.getFile().toString();
         String fileExt = FilenameUtils.getExtension(fileName);
         byte[] header = new byte[4];
-        
+
         try (RandomAccessFile raf = new RandomAccessFile(rom.getFile(), "r")) {
             raf.seek(0);
             raf.readFully(header);
         }
-        
+
         boolean state;
         switch (fileExt) {
             case "n64":
@@ -70,11 +70,11 @@ public class RomController {
                 return state = false;
         }
     }
-    
+
     // Check if ROM is Type Zelda
     protected boolean isZelda() {
         String romCartID = rom.getCartID();
-        
+
         boolean state;
         switch (romCartID) {
             case "ZL":    // OOT
@@ -85,35 +85,35 @@ public class RomController {
                 return state = false;
         }
     }
-    
+
     /*
      * ====================
      * General Informations
      * ====================
      */
-    
+
     // Define Loaded ROM File
     protected void setFile(File $romFile) {
         rom.setFile($romFile);
     }
-    
+
     // Return Loaded ROM File
     protected File getFile() {
         File romFile = rom.getFile();
         return romFile;
     }
-    
+
     // Load ROM Format
     protected void loadFormat() {
         String fileName = rom.getFile().toString();
         String fileExt = FilenameUtils.getExtension(fileName);
         rom.setFormat(fileExt);
     }
-    
+
     // Return Loaded ROM Format
     protected String getFormat() {
         String romFormat = rom.getFormat();
-        
+
         switch (romFormat) {
             case "n64":
                 return "Little Endian (N64 Format)";
@@ -125,17 +125,17 @@ public class RomController {
                 return Launcher.bundle.getString("invalid");
         }
     }
-    
+
     // Load ROM Size
     protected void loadSize() {
         long romSize = rom.getFile().length();
         rom.setSize(romSize);
     }
-    
+
     // Return Loaded ROM Size
     protected String getSize() {
         long romSize = rom.getSize();
-        
+
         if (romSize <= 8388608)
             return "8 MB (" + romSize + " " + Launcher.bundle.getString("bytes") + ")";
         else if (romSize <= 12582912)
@@ -151,12 +151,12 @@ public class RomController {
         else
             return "> 64 MB (" + romSize + " " + Launcher.bundle.getString("bytes") + ")";
     }
-    
+
     // Load ROM Name
     protected void loadName() throws IOException {
         String romFormat = rom.getFormat();
         byte[] romName = N64Util.readFileToBytes(rom.getFile(), 32, 20);
-        
+
         switch (romFormat) {
             case "n64":
                 rom.setName(N64Util.convertN64toZ64(new String(romName), false).trim());
@@ -170,17 +170,17 @@ public class RomController {
                 break;
         }
     }
-    
+
     // Return Loaded ROM Name
     protected String getName() {
         String romName = rom.getName();
-        
+
         if (romName == null)
             romName = Launcher.bundle.getString("invalid");
-        
+
         return romName;
     }
-    
+
     // Load ROM Media
     protected void loadMedia() throws IOException {
         String romFormat = rom.getFormat();
@@ -204,11 +204,11 @@ public class RomController {
             rom.setMedia(new String(romMedia));
         }
     }
-    
+
     // Return Loaded ROM Media
     protected String getMedia() {
         String romMedia = rom.getMedia();
-        
+
         if (Objects.equals("N", romMedia))
             return romMedia + " (" + Launcher.bundle.getString("n64Cart") + ")";
         else if (Objects.equals("D", romMedia))
@@ -222,7 +222,7 @@ public class RomController {
         else
             return romMedia + " (" + Launcher.bundle.getString("unknown") + ")";
     }
-    
+
     // Load ROM Cartridge ID
     protected void loadCartID() throws IOException {
         String romFormat = rom.getFormat();
@@ -258,17 +258,17 @@ public class RomController {
             rom.setCartID(romCartID);
         }
     }
-    
+
     // Return Loaded ROM Cartridge ID
     protected String getCartID() {
         String romCartID = rom.getCartID();
-        
+
         if (romCartID == null)
             romCartID = Launcher.bundle.getString("invalid");
-        
+
         return romCartID;
     }
-    
+
     // Load ROM Region
     protected void loadRegion() throws IOException {
         String romFormat = rom.getFormat();
@@ -292,11 +292,11 @@ public class RomController {
             rom.setRegion(new String(romRegion));
         }
     }
-    
+
     // Return Loaded ROM Region
     protected String getRegion() {
         String romRegion = rom.getRegion();
-        
+
         if (Objects.equals("7", romRegion))
             return romRegion + " (" + Launcher.bundle.getString("regBeta") + ")";
         else if (Objects.equals("E", romRegion))
@@ -335,10 +335,10 @@ public class RomController {
             return romRegion + " (" + Launcher.bundle.getString("regNTSCGateway") + ")";
         else if (Objects.equals("L", romRegion))
             return romRegion + " (" + Launcher.bundle.getString("regPALGateway") + ")";
-        
+
         return romRegion + " (" + Launcher.bundle.getString("unknown") + ")";
     }
-    
+
     // Load ROM Version
     protected void loadVersion() throws IOException {
         String romFormat = rom.getFormat();
@@ -362,11 +362,11 @@ public class RomController {
             rom.setVersion(N64Util.convertBytestoHex(romVersion));
         }
     }
-    
+
     // Return Loaded ROM Version
     protected String getVersion() {
         String romVersion = rom.getVersion();
-        
+
         if (romVersion == null)
             romVersion = Launcher.bundle.getString("invalid");
         else {
@@ -374,10 +374,10 @@ public class RomController {
             int lower = Character.digit(romVersion.charAt(1), 16);
             romVersion = "v" + upper + "." + lower;
         }
-        
+
         return romVersion;
     }
-    
+
     // Load ROM CIC
     protected void loadCIC() throws IOException {
         String romFormat = rom.getFormat();
@@ -389,7 +389,7 @@ public class RomController {
             is[i] = this.getClass().getResourceAsStream(config.getCICPath(cic[i]));
             bootcodes[i] = N64Util.readStreamToBytes(is[i], 0, is[i].available());
         }
-        
+
         switch (romFormat) {
             case "n64":
                 if (Objects.equals(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCIC), true), N64Util.convertBytestoHex(bootcodes[0])))
@@ -429,22 +429,22 @@ public class RomController {
                 break;
         }
     }
-    
+
     // Return Loaded ROM CIC
     protected String getCIC() {
         String romCIC = rom.getCIC();
-        
+
         if (romCIC == null)
             romCIC = Launcher.bundle.getString("invalid");
-        
+
         return romCIC;
     }
-    
+
     // Load ROM CRC
     protected void loadCRC() throws IOException {
         String romFormat = rom.getFormat();
         byte[] romCRC = N64Util.readFileToBytes(rom.getFile(), 16, 8);
-        
+
         switch (romFormat) {
             case "n64":
                 rom.setCRC(N64Util.convertN64toZ64(N64Util.convertBytestoHex(romCRC), true));
@@ -457,17 +457,17 @@ public class RomController {
                 break;
         }
     }
-    
+
     // Return Loaded ROM CRC
     protected String getCRC() {
         String romCRC = rom.getCRC();
-        
+
         if (romCRC == null)
             romCRC = Launcher.bundle.getString("invalid");
-        
+
         return romCRC;
     }
-    
+
     // Load ROM CRC Status
     protected void loadCRCStatus() throws IOException {
         try (InputStream is = this.getClass().getResourceAsStream(config.getCRCList())) {
@@ -485,33 +485,33 @@ public class RomController {
             }
         }
     }
-    
+
     // Return Loaded ROM CRC Status
     protected String getCRCStatus() {
         String romCRCStatus = rom.getCRCStatus();
-        
+
         if (romCRCStatus == null)
             romCRCStatus = Launcher.bundle.getString("invalid");
         
         return romCRCStatus;
     }
-    
+
     // Return Loaded ROM CRC Status Color
     protected Paint getCRCStatusColor() {
         Paint romCRCStatusColor = rom.getCRCStatusColor();
-        
+
         if (romCRCStatusColor == null)
             romCRCStatusColor = Color.web("#333333");
-        
+
         return romCRCStatusColor;
     }
-    
+
     /*
      * ==================
      * Zelda Informations
      * ==================
      */
-    
+
     // Load ROM Edition (Type Zelda)
     protected void loadEdition() throws IOException {
         String romFormat = rom.getFormat();
@@ -553,21 +553,21 @@ public class RomController {
                 romZ.setEdition(null);
         }
     }
-    
+
     // Return Loaded ROM Edition (Type Zelda)
     protected String getEdition() {
         String romZEdition = romZ.getEdition();
-        
+
         if (this.isZelda()) {
             if (romZEdition == null)
                 romZEdition = Launcher.bundle.getString("invalid");
         }
         else
             romZEdition = Launcher.bundle.getString("unsupported");
-        
+
         return romZEdition;
     }
-    
+
     // Load ROM Creator (Type Zelda)
     protected void loadCreator() throws IOException {
         File romFile = rom.getFile();
@@ -575,7 +575,7 @@ public class RomController {
         byte[] romZCreator = N64Util.readFileToBytes(romFile, 28672, 151552);
         String romZEdition = romZ.getEdition();
         int offset = new String(romZCreator).indexOf("zelda@") + 28672;
-        
+
         if (offset != -1 && Objects.equals(romFormat, "z64")) {
             if (Objects.equals(romZEdition, "Nintendo 64"))
                 romZ.setCreator(new String(N64Util.readFileToBytes(romFile, offset, 11)));
@@ -583,21 +583,21 @@ public class RomController {
                 romZ.setCreator(new String (N64Util.readFileToBytes(romFile, offset, 13)));
         }
     }
-    
+
     // Return Loaded ROM Creator (Type Zelda)
     protected String getCreator() {
         String romZCreator = romZ.getCreator();
-        
+
         if (this.isZelda()) {
             if (romZCreator == null)
                 romZCreator = Launcher.bundle.getString("invalid");
         }
         else
             romZCreator = Launcher.bundle.getString("unsupported");
-        
+
         return romZCreator;
     }
-    
+
     // Load ROM Compression (Type Zelda)
     protected void loadCompression() {
         long romSize = rom.getSize();
@@ -608,11 +608,11 @@ public class RomController {
         else
             romZ.setCompression(false);
     }
-    
+
     // Return Loaded ROM Compression (Type Zelda)
     protected String getCompression() {
         boolean romZCompression = romZ.getCompression();
-        
+
         if (this.isZelda()) {
             if (romZCompression == true) {
                 romZ.setCompressionColor(Color.CORAL);
@@ -626,23 +626,23 @@ public class RomController {
         else
             return Launcher.bundle.getString("unsupported");
     }
-    
+
     // Return Loaded ROM Compression Color (Type Zelda)
     protected Paint getCompressionColor() {
         Paint romCompressionColor = romZ.getCompressionColor();
-        
+
         if (romCompressionColor == null || !this.isZelda())
             romCompressionColor = Color.web("#333333");
-        
+
         return romCompressionColor;
     }
-    
+
     /*
      * ==========================
      * Miscellaneous Informations
      * ==========================
      */
-    
+
     // Load ROM Specified Header Parameter
     protected void loadHeader(String param) throws java.lang.Exception {
         File romFile = rom.getFile();
@@ -650,7 +650,7 @@ public class RomController {
         byte[] romHeader;
         int offset = 0;
         int length = 0;
-        
+
         switch (param) {
             case "byteFormat":
                 offset = 0;
@@ -669,10 +669,10 @@ public class RomController {
                 length = 4;
                 break;
         }
-        
+
         romHeader = N64Util.readFileToBytes(romFile, offset, length);
         String setter = "set" + param.substring(0, 1).toUpperCase() + param.substring(1);
-        
+
         if (!"byteFormat".equals(param)) {
             switch (romFormat) {
                 case "n64":
@@ -687,22 +687,22 @@ public class RomController {
             rom.setByteFormat("0x" + N64Util.convertBytestoHex(romHeader).replaceAll("\\s+", ""));
         }
     }
-    
+
     // Return Loaded ROM Specified Header Parameter
     protected String getHeader(String param) throws java.lang.Exception {
         String getter = "get" + param.substring(0, 1).toUpperCase() + param.substring(1);
         String romHeader = (String) rom.getClass().getMethod(getter).invoke(rom);
-        
+
         if (romHeader == null)
             romHeader = Launcher.bundle.getString("invalid");
-        
+
         return romHeader;
     }
-    
+
     // Load ROM Specified Checksum
     protected void loadChecksum(String hash) throws IOException {
         InputStream is = new FileInputStream(rom.getFile());
-        
+
         switch (hash) {
             case "md5":
                 rom.setMD5(DigestUtils.md5Hex(is));
@@ -712,7 +712,7 @@ public class RomController {
                 break;
         }
     }
-    
+
     // Return Loaded ROM Specified Checksum
     protected String getChecksum(String hash) {
         switch (hash) {
@@ -727,18 +727,18 @@ public class RomController {
                     return romSHA1;
                 break;
         }
-        
+
         return Launcher.bundle.getString("invalid");
     }
-    
+
     // Save Loaded ROM Informations
     protected void saveData() throws java.lang.Exception {
         String fileName = rom.getFile().getName();
         File data = new File("dump/" + FilenameUtils.removeExtension(fileName) + ".txt");
-        
+
         if (data.getParentFile().mkdir())
             data.createNewFile();
-        
+
         // Generate Rom Infos
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
         try (PrintWriter pw = new PrintWriter(data, "UTF-8")) {
@@ -788,7 +788,7 @@ public class RomController {
             pw.println("SHA-1:                      " + this.getChecksum("sha1"));
         }
     }
-    
+
     // Output Loaded ROM Informations (Debug Mode)
     protected void debug() {
         System.out.println("");
@@ -814,5 +814,5 @@ public class RomController {
         System.out.println("MD5:                        " + rom.getMD5());
         System.out.println("SHA-1:                      " + rom.getSHA1());
     }
-    
+
 }

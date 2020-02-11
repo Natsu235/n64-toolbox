@@ -32,19 +32,19 @@ import javafx.stage.Stage;
 @SuppressWarnings("AccessStaticViaInstance")
 
 public class ApplicationController implements Initializable {
-    
+
     // Configuration
     private static final Configuration config = new Configuration();
-    
+
     // Controllers
     private static final RomController romCtrl = new RomController();
-    
+
     // Models
     private static final Build build = new Build();    // Build Infos
-    
+
     // Defined Language
     private static ResourceBundle bundle;
-    
+
     @FXML
     private Button btnOpen, btnSave, btnExit;
     @FXML
@@ -57,12 +57,12 @@ public class ApplicationController implements Initializable {
     private Label lblByteFormat, lblClockRate, lblProgramCounter, lblReleaseAddress, lblCRC1, lblCRC2, lblMD5, lblSHA1;
     @FXML
     private Label lblPrjTitle, lblPrjVersion, lblPrjCreator, lblPrjJavaFX;
-    
+
     @FXML
     // Open a ROM
     private void open(ActionEvent event) {
         Stage stage = (Stage) btnOpen.getScene().getWindow();
-        
+
         // Select a ROM
         FileChooser fc = new FileChooser();
         if (config.getRomDirectory() != null && Files.exists(config.getRomDirectory().toPath()))
@@ -70,7 +70,7 @@ public class ApplicationController implements Initializable {
         fc.setTitle(bundle.getString("openRom"));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(bundle.getString("n64Roms"), "*.n64; *.v64; *.z64"));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter(bundle.getString("allFiles"), "*.*"));
-        
+
         // Save ROM Path
         File oldFile = romCtrl.getFile();
         File newFile = fc.showOpenDialog(stage);
@@ -86,7 +86,7 @@ public class ApplicationController implements Initializable {
         }
         else
             return;
-        
+
         // Check ROM Header
         Message msgBox;
         try {
@@ -104,7 +104,7 @@ public class ApplicationController implements Initializable {
             Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
         }
     }
-    
+
     @FXML
     // Save ROM Infos
     private void save(ActionEvent event) {
@@ -116,19 +116,19 @@ public class ApplicationController implements Initializable {
         }
         Message msgBox = new Message(bundle.getString("romInfosSaved"), bundle.getString("romInfosSavedText"), Alert.AlertType.INFORMATION);
     }
-    
+
     @FXML
     // Exit Application
     private void exit(ActionEvent event) {
         Stage stage = (Stage) btnExit.getScene().getWindow();
         stage.close();
     }
-    
+
     @FXML
     // Change Language
     private void setLanguage(ActionEvent event) {
         String button = ((Button) event.getSource()).getId();
-        
+
         switch (button) {
             case "btnFrench":
                 config.setLanguage(Locale.FRENCH);
@@ -147,10 +147,10 @@ public class ApplicationController implements Initializable {
                 config.setLanguage(Locale.ENGLISH);
                 break;
         }
-        
+
         Message msgBox = new Message(bundle.getString("langChanged"), bundle.getString("langChangedText"), Alert.AlertType.INFORMATION);
     }
-    
+
     // Load ROM Informations
     private void load() throws java.lang.Exception {
         // Methods to load Rom Infos
@@ -164,7 +164,7 @@ public class ApplicationController implements Initializable {
                 romCtrl.getClass().getDeclaredMethod(loaders[i]).invoke(romCtrl);
         }
     }
-    
+
     // Display ROM Informations
     private void show() throws java.lang.Exception {
         // Methods to retrieve Rom Infos
@@ -172,36 +172,36 @@ public class ApplicationController implements Initializable {
         // Parameters passed to the methods
         String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "md5", "sha1"};
         Label[] labels = {lblFileType, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus, lblZEdition, lblZCreator, lblZCompression, lblByteFormat, lblClockRate, lblProgramCounter, lblReleaseAddress, lblMD5, lblSHA1};
-        
+
         lblFileName.setText(romCtrl.getFile().getName());
-        
+
         for (int i = 0; i < getters.length; i++) {
             if (args[i] != null)
                 labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i], String.class).invoke(romCtrl, new Object[]{args[i]}));
             else
                 labels[i].setText((String) romCtrl.getClass().getDeclaredMethod(getters[i]).invoke(romCtrl));
         }
-        
+
         lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());
         lblZCompression.setTextFill(romCtrl.getCompressionColor());
         //romCtrl.debug();
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle resources) {
         this.bundle = resources;
-        
+
         // Randomize Avatar Image
         if (Math.random() < 0.5) {
             Image avatar = new Image(this.getClass().getResource("/com/phantomnat/n64toolbox/resources/images/makoto-naegi-1.png").toString());
             imgAvatar.setImage(avatar);
         }
-        
+
         // Fill About Informations
         lblPrjTitle.setText(build.getTitle());
         lblPrjVersion.setText(bundle.getString("appVersion") + " " + build.getVersion());
         lblPrjCreator.setText(bundle.getString("appCreator") + " " + build.getCreator());
         lblPrjJavaFX.setText(bundle.getString("appJavaFX") + " " + build.getJavaFX());
     }
-    
+
 }

@@ -13,7 +13,7 @@ import java.util.Locale;
  * @author Dorian Pilorge
  */
 public class Configuration {
-    
+
     private static File romDir;
     private static String cfgPath = "config.ini";
     private static String cicPath = "/com/phantomnat/n64toolbox/resources/bootcodes/";
@@ -23,9 +23,9 @@ public class Configuration {
     private static double width = 720;
     private static double height = 480;
     private static boolean resizable = true;
-    
+
     public Configuration() {}
-    
+
     // Getters
     public static File getRomDirectory() { return romDir; }
     public static String getConfigPath() { return cfgPath; }
@@ -36,7 +36,7 @@ public class Configuration {
     public static double getWidth() { return width; }
     public static double getHeight() { return height; }
     public static boolean getResizable() { return resizable; }
-    
+
     // Setters
     public void setRomDirectory(File romDir) { this.romDir = romDir; }
     //public void getConfigPath(String cfgPath) { this.cfgPath = cfgPath; }
@@ -47,5 +47,5 @@ public class Configuration {
     public void setWidth(double width) { this.width = width; }
     public void setHeight(double height) { this.height = height; }
     public void setResizable(boolean resizable) { this.resizable = resizable; }
-    
+
 }

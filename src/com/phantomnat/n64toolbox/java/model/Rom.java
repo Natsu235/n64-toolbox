@@ -15,7 +15,7 @@ import javafx.scene.paint.Paint;
 @SuppressWarnings("AccessStaticViaInstance")
 
 public class Rom {
-    
+
     private static File file;
     private static String format;
     private static long size;
@@ -36,9 +36,9 @@ public class Rom {
     private static String CRC2;
     private static String MD5;
     private static String SHA1;
-    
+
     public Rom() {}
-    
+
     public Rom(File file, String format, long size, String name, String media, String cartID, String region, String version, String CIC, String CRC, String CRCStatus, Paint CRCStatusColor, String byteFormat, String clockRate, String programCounter, String releaseAddress, String CRC1, String CRC2, String MD5, String SHA1) {
         this.file = file;
         this.format = format;
@@ -61,7 +61,7 @@ public class Rom {
         this.MD5 = MD5;
         this.SHA1 = SHA1;
     }
-    
+
     // Getters
     public static File getFile() { return file; }
     public static String getFormat() { return format; }
@@ -83,7 +83,7 @@ public class Rom {
     public static String getCRC2() { return CRC2; }
     public static String getMD5() { return MD5; }
     public static String getSHA1() { return SHA1; }
-    
+
     // Setters
     public void setFile(File file) { this.file = file; }
     public void setFormat(String format) { this.format = format; }
@@ -105,5 +105,5 @@ public class Rom {
     public void setCRC2(String CRC2) { this.CRC2 = CRC2; }
     public void setMD5(String MD5) { this.MD5 = MD5; }
     public void setSHA1(String SHA1) { this.SHA1 = SHA1; }
-    
+
 }

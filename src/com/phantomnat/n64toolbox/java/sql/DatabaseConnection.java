@@ -14,12 +14,12 @@ import java.sql.SQLException;
  * @author Dorian Pilorge
  */
 public class DatabaseConnection {
-    
+
     private String url = "jdbc:mysql://localhost/toolbox";
     private String username = "root";
     private String password = "";
     private static Connection connect;
-    
+
     private DatabaseConnection() {
         try {
             connect = DriverManager.getConnection(url, username, password);
@@ -28,12 +28,12 @@ public class DatabaseConnection {
             ex.printStackTrace();
         }
     }
-    
+
     public static Connection getInstance() {
         if (connect == null)
             new DatabaseConnection();
-            
+
         return connect;
     }
-    
+
 }

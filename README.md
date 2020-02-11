@@ -10,7 +10,7 @@ List of all required dependencies to build this software:
 * [NetBeans IDE 8.2](https://netbeans.org/downloads/8.2/) - Java Integrated Development Environment
 * [Java JDK 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) - Java Devlopment Kit
 
-### How to build
+### Building
 To successfully build this project:
 * First open the project folder in Netbeans IDE 8.2.
 * Then, right-click on the project in the *Projects* window to display the context menu.
@@ -18,6 +18,15 @@ To successfully build this project:
 * The compiled application can be found inside the *dist* folder.
 
 If something went wrong during this process, you can still submit a new issue to the project.
+
+### Running
+There are 3 custom running configurations available for this application:
+
+```Debug``` - Run application in Debug Mode
+
+```English``` - Run application in English
+
+```French``` - Run application in French
 
 ## Miscellaneous
 

@@ -18,27 +18,27 @@ import java.util.Objects;
  * @author Dorian Pilorge
  */
 public class N64Util {
-    
+
     // Convert Bytes to Hex
     public String convertBytestoHex(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
-        
+
         for (byte b : bytes)
             sb.append(String.format("%02X ", b));
-        
+
         String hex = sb.toString();
         return hex.substring(0, hex.length() - 1);
     }
-    
+
     // Convert N64 to Z64 Format
     public String convertN64toZ64(String str, boolean hex) {
         StringBuilder sb = new StringBuilder();
         String s = str;
         int i;
-        
+
         if (hex) {
             s = str.replaceAll("\\s+", "");
-            
+
             for (i = 0; i < s.length() / 8; i++) {
                 sb.append(s.charAt(i * 8 + 6));
                 sb.append(s.charAt(i * 8 + 7));
@@ -58,26 +58,26 @@ public class N64Util {
                 sb.append(s.charAt(i * 4));
             }
         }
-        
+
         s = sb.toString();
-        
+
         if (hex) {
             s = s.replaceAll("..", "$0 ");
             return s.substring(0, s.length() - 1);
         }
-        
+
         return s;
     }
-    
+
     // Convert V64 to Z64 Format
     public String convertV64toZ64(String str, boolean hex) {
         StringBuilder sb = new StringBuilder();
         String s = str;
         int i;
-        
+
         if (hex) {
             s = str.replaceAll("\\s+", "");
-            
+
             for (i = 0; i < s.length() / 4; i++) {
                 sb.append(s.charAt(i * 4 + 2));
                 sb.append(s.charAt(i * 4 + 3));
@@ -91,17 +91,17 @@ public class N64Util {
                 sb.append(s.charAt(i * 2));
             }
         }
-        
+
         s = sb.toString();
-        
+
         if (hex) {
             s = s.replaceAll("..", "$0 ");
             return s.substring(0, s.length() - 1);
         }
-        
+
         return s;
     }
-    
+
     // Return the Real Zelda ROM Name
     public String realZRomName(String romCRC, String romRegion) {
         // TODO: Get Real Name from N64-CRC-Database!
@@ -155,10 +155,10 @@ public class N64Util {
             return "Zelda no Densetsu - Majora no Kamen (J) (v1.1)";
         if (Objects.equals(romCRC, "84 73 D0 C1 23 12 06 66") || Objects.equals(romCRC, "10 08 B3 C5 FA 59 11 8D"))
             return "Zelda no Densetsu - Majora no Kamen (J) (GameCube Edition)";
-        
+
         return null;
     }
-    
+
     // Read a File to Bytes
     public byte[] readFileToBytes(File file, int offset, int length) throws FileNotFoundException, IOException {
         byte[] data = new byte[length];
@@ -166,22 +166,22 @@ public class N64Util {
         raf.seek(offset);
         raf.readFully(data);
         raf.close();
-        
+
         return data;
     }
-    
+
     // Read an InputStream to Bytes
     public byte[] readStreamToBytes(InputStream is, int offset, int length) throws IOException {
         byte[] data = new byte[length];
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        
+
         int i;
         while ((i = is.read(data, offset, data.length)) != -1) {
             buffer.write(data, offset, i);
         }
-        
+
         buffer.close();
-        
+
         return data;
     }
 

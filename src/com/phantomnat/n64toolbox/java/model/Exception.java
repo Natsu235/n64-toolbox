@@ -22,23 +22,23 @@ import javafx.stage.Stage;
 @SuppressWarnings("AccessStaticViaInstance")
 
 public class Exception {
-    
+
     // Configuration
     private static final Configuration config = new Configuration();
-    
+
     private static String title;
     private static String message;
     private static String error;
-    
+
     public Exception() {}
-    
+
     public Exception(String title, String message, String error, java.lang.Exception exception) {
         this.title = title;
         this.message = message;
         this.error = error;
         createException(exception);
     }
-    
+
     // Display an Exception
     private void createException(java.lang.Exception e) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -47,34 +47,34 @@ public class Exception {
         alert.setHeaderText(this.message);
         alert.setContentText(this.error);
         alert.getDialogPane().setMinSize(460, 200);
-        
+
         // Create Expandable Exception
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         String exception = sw.toString();
-        
+
         Label blank = new Label("");
         Label label = new Label("The exception stacktrace was:");
-        
+
         TextArea textArea = new TextArea(exception);
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        
+
         textArea.setMaxWidth(Double.MAX_VALUE);
         textArea.setMaxHeight(Double.MAX_VALUE);
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
-        
+
         GridPane expContent = new GridPane();
         expContent.setMaxWidth(Double.MAX_VALUE);
         expContent.add(blank, 0, 0);
         expContent.add(label, 0, 1);
         expContent.add(textArea, 0, 2);
-        
+
         // Set Expandable Exception Dialog Pane
         alert.getDialogPane().setExpandableContent(expContent);
         alert.showAndWait();
     }
-    
+
 }

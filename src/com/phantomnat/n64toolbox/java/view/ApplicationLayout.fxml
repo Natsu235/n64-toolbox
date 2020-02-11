@@ -47,7 +47,7 @@
     </ButtonBar>
     <TabPane fx:id="tabPane" layoutY="66.0" prefHeight="420.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <tabs>
-        <Tab fx:id="tabInfos" text="%informations">
+        <Tab fx:id="tabInfos" style="-fx-font-size: 15;" text="%informations">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -186,7 +186,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabZInfos" text="%zeldaInfos">
+        <Tab fx:id="tabZInfos" style="-fx-font-size: 15;" text="%zeldaInfos">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -259,7 +259,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabMInfos" text="%moreInfos">
+        <Tab fx:id="tabMInfos" style="-fx-font-size: 15;" text="%moreInfos">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -367,7 +367,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabLanguage" text="%language">
+        <Tab fx:id="tabLanguage" style="-fx-font-size: 15;" text="%language">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -438,7 +438,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabAbout" text="%about">
+        <Tab fx:id="tabAbout" style="-fx-font-size: 15;" text="%about">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>

@@ -17,23 +17,23 @@ import javafx.stage.Stage;
 @SuppressWarnings("AccessStaticViaInstance")
 
 public class Message {
-    
+
     // Configuration
     private static final Configuration config = new Configuration();
-    
+
     private static String title;
     private static String message;
     private static AlertType type;
-    
+
     public Message() {}
-    
+
     public Message(String title, String message, AlertType type) {
         this.title = title;
         this.message = message;
         this.type = type;
         createMessage();
     }
-    
+
     // Display a Message Box
     private void createMessage() {
         Alert alert = new Alert(type);
@@ -43,5 +43,5 @@ public class Message {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+
 }

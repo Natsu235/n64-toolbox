@@ -39,9 +39,9 @@ Icon
 
 #### NetBeans ####
 
-nbproject/*
-!nbproject/project.properties
-!nbproject/project.xml
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
 build/
 nbbuild/
 dist/
