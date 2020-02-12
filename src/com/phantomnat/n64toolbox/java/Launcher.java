@@ -66,10 +66,11 @@ public class Launcher extends Application {
                 Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
             }
             config.setRomDirectory(options.get("Local", "RomDirectory", File.class));
-            config.setLanguage(new Locale(lang == null ? options.get("Local", "Language", String.class) : lang));
+            config.setLanguage(new Locale(lang != null ? lang : options.get("Local", "Language", String.class)));
             config.setWidth(options.get("Window", "Width", double.class));
             config.setHeight(options.get("Window", "Height", double.class));
             config.setResizable(options.get("Window", "IsResizable", boolean.class));
+            config.setDebug(debug ? true : options.get("Debug", "IsDebug", boolean.class));
         }
 
         // Load Language
@@ -103,6 +104,7 @@ public class Launcher extends Application {
         options.put("Window", "Width", config.getWidth());
         options.put("Window", "Height", config.getHeight());
         options.put("Window", "IsResizable", config.getResizable());
+        options.put("Debug", "IsDebug", config.getDebug());
         try {
             options.store(new FileOutputStream(config.getConfigPath()));
         }

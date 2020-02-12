@@ -14,15 +14,19 @@ import java.util.Locale;
  */
 public class Configuration {
 
+    // Local
     private static File romDir;
     private static String cfgPath = "config.ini";
     private static String cicPath = "/com/phantomnat/n64toolbox/resources/bootcodes/";
     private static String crcList = "/com/phantomnat/n64toolbox/resources/checksums/N64-CRC-Database.txt";
     private static String appIcon = "/com/phantomnat/n64toolbox/resources/images/n64-icon.png";
     private static Locale appLang = Locale.ENGLISH;
+    // Window
     private static double width = 720;
     private static double height = 480;
     private static boolean resizable = true;
+    // Debug
+    private static boolean debug = false;
 
     public Configuration() {}
 
@@ -36,6 +40,7 @@ public class Configuration {
     public static double getWidth() { return width; }
     public static double getHeight() { return height; }
     public static boolean getResizable() { return resizable; }
+    public static boolean getDebug() { return debug; }
 
     // Setters
     public void setRomDirectory(File romDir) { this.romDir = romDir; }
@@ -47,5 +52,6 @@ public class Configuration {
     public void setWidth(double width) { this.width = width; }
     public void setHeight(double height) { this.height = height; }
     public void setResizable(boolean resizable) { this.resizable = resizable; }
+    public void setDebug(boolean debug) { this.debug = debug; }
 
 }

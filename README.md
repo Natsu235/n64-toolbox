@@ -1,7 +1,7 @@
 # N64 Toolbox
 A user-friendly Java application to display basic informations about N64 Roms.
 
-<kbd><img width="520" height="373" src="assets/images/n64-toolbox-app-02.png" /></kbd>
+<kbd><img width="520" height="373" src="assets/images/release-1.0.png" /></kbd>
 
 ## Getting Started
 
@@ -33,7 +33,7 @@ There are 3 custom running configurations available for this application:
 ### Trello
 [Trello](https://trello.com/) is a web-based project management application allowing tasks scheduling during the development.
 
-<a href="https://trello.com/b/PPUtJUie/n64-toolbox" target="_blank"><img width="180" height="89" src="assets/images/n64-toolbox-thumb.png" /></a>
+<a href="https://trello.com/b/PPUtJUie/n64-toolbox" target="_blank"><img width="180" height="89" src="assets/images/trello-thumb.png" /></a>
 
 ### Licence
 This project is licensed under the GPLv3 License. See the [LICENSE.md](LICENSE.md) file for details.

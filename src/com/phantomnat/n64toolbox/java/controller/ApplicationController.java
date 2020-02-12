@@ -75,12 +75,10 @@ public class ApplicationController implements Initializable {
         File oldFile = romCtrl.getFile();
         File newFile = fc.showOpenDialog(stage);
         if (newFile != null) {
-            //romCtrl.loadType(newFile);
             romCtrl.setFile(newFile);
             config.setRomDirectory(newFile.getParentFile());
         }
         else if (oldFile != null) {
-            //romCtrl.loadType(oldFile);
             romCtrl.setFile(oldFile);
             config.setRomDirectory(oldFile.getParentFile());
         }
@@ -154,9 +152,9 @@ public class ApplicationController implements Initializable {
     // Load ROM Informations
     private void load() throws java.lang.Exception {
         // Methods to load Rom Infos
-        String[] loaders = {"loadFormat", "loadSize", "loadName", "loadMedia", "loadCartID", "loadRegion", "loadVersion", "loadCIC", "loadCRC", "loadCRCStatus", "loadEdition", "loadCreator", "loadCompression", "loadHeader", "loadHeader", "loadHeader", "loadHeader", "loadChecksum", "loadChecksum"};
+        String[] loaders = {"loadFormat", "loadSize", "loadName", "loadMedia", "loadCartID", "loadRegion", "loadVersion", "loadCIC", "loadCRC", "loadCRCStatus", "loadRealName", "loadEdition", "loadCreator", "loadBuildDate", "loadCompression", "loadHeader", "loadHeader", "loadHeader", "loadHeader", "loadHeader", "loadHeader", "loadChecksum", "loadChecksum"};
         // Parameters passed to the methods
-        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "md5", "sha1"};
+        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "CRC1", "CRC2", "md5", "sha1"};
         for (int i = 0; i < loaders.length; i++) {
             if (args[i] != null)
                 romCtrl.getClass().getDeclaredMethod(loaders[i], String.class).invoke(romCtrl, new Object[]{args[i]});
@@ -168,10 +166,10 @@ public class ApplicationController implements Initializable {
     // Display ROM Informations
     private void show() throws java.lang.Exception {
         // Methods to retrieve Rom Infos
-        String[] getters = {"getFormat", "getSize", "getName", "getMedia", "getCartID", "getRegion", "getVersion", "getCIC", "getCRC", "getCRCStatus", "getEdition", "getCreator", "getCompression", "getHeader", "getHeader", "getHeader", "getHeader", "getChecksum", "getChecksum"};
+        String[] getters = {"getFormat", "getSize", "getName", "getMedia", "getCartID", "getRegion", "getVersion", "getCIC", "getCRC", "getCRCStatus", "getRealName", "getEdition", "getCreator", "getBuildDate", "getCompression", "getHeader", "getHeader", "getHeader", "getHeader", "getHeader", "getHeader", "getChecksum", "getChecksum"};
         // Parameters passed to the methods
-        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "md5", "sha1"};
-        Label[] labels = {lblFileType, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus, lblZEdition, lblZCreator, lblZCompression, lblByteFormat, lblClockRate, lblProgramCounter, lblReleaseAddress, lblMD5, lblSHA1};
+        String[] args = {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, "byteFormat", "clockRate", "programCounter", "releaseAddress", "CRC1", "CRC2", "md5", "sha1"};
+        Label[] labels = {lblFileType, lblSize, lblName, lblMedia, lblCartID, lblRegion, lblVersion, lblCIC, lblCRC, lblCRCStatus, lblZName, lblZEdition, lblZCreator, lblZBuildDate, lblZCompression, lblByteFormat, lblClockRate, lblProgramCounter, lblReleaseAddress, lblCRC1, lblCRC2, lblMD5, lblSHA1};
 
         lblFileName.setText(romCtrl.getFile().getName());
 
@@ -184,7 +182,15 @@ public class ApplicationController implements Initializable {
 
         lblCRCStatus.setTextFill(romCtrl.getCRCStatusColor());
         lblZCompression.setTextFill(romCtrl.getCompressionColor());
-        //romCtrl.debug();
+
+        if (this.isDebug())
+            romCtrl.debug();
+    }
+
+    // Check if Application is in Debug Mode
+    protected boolean isDebug() {
+        boolean state = config.getDebug();
+        return state;
     }
 
     @Override

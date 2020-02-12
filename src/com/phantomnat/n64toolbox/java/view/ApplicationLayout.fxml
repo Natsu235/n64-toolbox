@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phantomnat.n64toolbox.java.controller.ApplicationController">
   <children>
@@ -26,19 +25,10 @@
           </image>
         </ImageView>
         <Button fx:id="btnOpen" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#open" prefHeight="30.0" prefWidth="100.0" text="%open">
-          <font>
-            <Font name="System" size="15.0" />
-          </font>
         </Button>
         <Button fx:id="btnSave" disable="true" layoutX="448.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#save" prefHeight="30.0" prefWidth="100.0" text="%save">
-          <font>
-            <Font name="System" size="15.0" />
-          </font>
         </Button>
         <Button fx:id="btnExit" layoutX="533.0" layoutY="16.0" maxHeight="30.0" maxWidth="100.0" minHeight="30.0" minWidth="100.0" mnemonicParsing="false" onAction="#exit" prefHeight="30.0" prefWidth="100.0" text="%exit">
-          <font>
-            <Font name="System" size="15.0" />
-          </font>
         </Button>
       </buttons>
       <padding>
@@ -47,7 +37,7 @@
     </ButtonBar>
     <TabPane fx:id="tabPane" layoutY="66.0" prefHeight="420.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <tabs>
-        <Tab fx:id="tabInfos" style="-fx-font-size: 15;" text="%informations">
+        <Tab fx:id="tabInfos" text="%informations">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -71,114 +61,48 @@
                   </rowConstraints>
                   <children>
                     <Label text="%fileName">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%fileType" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romSize" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romName" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romMedia" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romCartID" GridPane.rowIndex="5">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romRegion" GridPane.rowIndex="6">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romVersion" GridPane.rowIndex="7">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romCIC" GridPane.rowIndex="8">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romCRC" GridPane.rowIndex="9">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romCRCStatus" GridPane.rowIndex="10">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblFileName" GridPane.columnIndex="1">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblFileType" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblSize" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblName" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblMedia" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblCartID" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblRegion" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblVersion" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblCIC" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblCRC" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblCRCStatus" GridPane.columnIndex="1" GridPane.rowIndex="10">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                   </children>
                 </GridPane>
@@ -186,7 +110,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabZInfos" style="-fx-font-size: 15;" text="%zeldaInfos">
+        <Tab fx:id="tabZInfos" text="%zeldaInfos">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -204,54 +128,24 @@
                   </rowConstraints>
                   <children>
                     <Label text="%romZName">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romZEdition" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romZCreator" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romZBuildDate" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romZCompression" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblZName" GridPane.columnIndex="1">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblZEdition" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblZCreator" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblZBuildDate" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblZCompression" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                   </children>
                 </GridPane>
@@ -259,7 +153,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabMInfos" style="-fx-font-size: 15;" text="%moreInfos">
+        <Tab fx:id="tabMInfos" text="%moreInfos">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -282,84 +176,36 @@
                   </rowConstraints>
                   <children>
                     <Label text="%romByteFormat">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romClockRate" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romProgramCounter" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romReleaseAddress" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romCRC1" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romCRC2" GridPane.rowIndex="5">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romMD5" GridPane.rowIndex="7">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label text="%romSHA1" GridPane.rowIndex="8">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblByteFormat" GridPane.columnIndex="1">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblClockRate" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblProgramCounter" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblReleaseAddress" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblCRC1" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblCRC2" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblMD5" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblSHA1" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                      <font>
-                        <Font name="System Bold" size="15.0" />
-                      </font>
                     </Label>
                   </children>
                 </GridPane>
@@ -367,7 +213,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabLanguage" style="-fx-font-size: 15;" text="%language">
+        <Tab fx:id="tabLanguage" text="%language">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -388,46 +234,28 @@
                   </rowConstraints>
                   <children>
                     <Label text="%langSelect">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Button fx:id="btnEnglish" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%english" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                       <GridPane.margin>
                         <Insets right="20.0" />
                       </GridPane.margin>
                     </Button>
                     <Button fx:id="btnFrench" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%french" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                       <GridPane.margin>
                         <Insets left="20.0" />
                       </GridPane.margin>
                     </Button>
                     <Button fx:id="btnGerman" disable="true" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%german" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                       <GridPane.margin>
                         <Insets right="20.0" />
                       </GridPane.margin>
                     </Button>
                     <Button fx:id="btnSpanish" disable="true" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%spanish" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                       <GridPane.margin>
                         <Insets left="20.0" />
                       </GridPane.margin>
                     </Button>
                     <Button fx:id="btnItalian" disable="true" maxHeight="30.0" maxWidth="120.0" minHeight="30.0" minWidth="120.0" mnemonicParsing="false" onAction="#setLanguage" prefHeight="30.0" prefWidth="120.0" text="%italian" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                       <GridPane.margin>
                         <Insets right="20.0" />
                       </GridPane.margin>
@@ -438,7 +266,7 @@
             </AnchorPane>
           </content>
         </Tab>
-        <Tab fx:id="tabAbout" style="-fx-font-size: 15;" text="%about">
+        <Tab fx:id="tabAbout" text="%about">
           <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
@@ -466,24 +294,12 @@
                   </rowConstraints>
                   <children>
                     <Label fx:id="lblPrjTitle">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblPrjVersion" GridPane.rowIndex="1">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblPrjCreator" GridPane.rowIndex="2">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                     <Label fx:id="lblPrjJavaFX" GridPane.rowIndex="3">
-                      <font>
-                        <Font name="System" size="15.0" />
-                      </font>
                     </Label>
                   </children>
                 </GridPane>

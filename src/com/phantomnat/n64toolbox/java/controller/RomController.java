@@ -382,9 +382,9 @@ public class RomController {
     protected void loadCIC() throws IOException {
         String romFormat = rom.getFormat();
         byte[] romCIC = N64Util.readFileToBytes(rom.getFile(), 64, 4032);
-        byte[][] bootcodes = new byte[4][];
+        byte[][] bootcodes = new byte[5][];
         String[] cic = {"6101-CIC", "6102-CIC", "6103-CIC", "6105-CIC", "6106-CIC"};
-        InputStream[] is = new InputStream[4];
+        InputStream[] is = new InputStream[5];
         for (int i = 0; i < is.length; i++) {
             is[i] = this.getClass().getResourceAsStream(config.getCICPath(cic[i]));
             bootcodes[i] = N64Util.readStreamToBytes(is[i], 0, is[i].available());
@@ -492,7 +492,7 @@ public class RomController {
 
         if (romCRCStatus == null)
             romCRCStatus = Launcher.bundle.getString("invalid");
-        
+
         return romCRCStatus;
     }
 
@@ -511,6 +511,27 @@ public class RomController {
      * Zelda Informations
      * ==================
      */
+
+    // Load ROM Real Name (Type Zelda)
+    protected void loadRealName() {
+        String romCRC = rom.getCRC();
+        String romRegion = rom.getRegion();
+        romZ.setRealName(N64Util.realZRomName(romCRC, romRegion));
+    }
+
+    // Return Loaded ROM Real Name (Type Zelda)
+    protected String getRealName() {
+        String romZName = romZ.getRealName();
+
+        if (this.isZelda()) {
+            if (romZName == null)
+                romZName = Launcher.bundle.getString("invalid");
+        }
+        else
+            romZName = Launcher.bundle.getString("unsupported");
+
+        return romZName;
+    }
 
     // Load ROM Edition (Type Zelda)
     protected void loadEdition() throws IOException {
@@ -598,6 +619,37 @@ public class RomController {
         return romZCreator;
     }
 
+    // Load ROM Creator (Type Zelda)
+    protected void loadBuildDate() throws IOException {
+        File romFile = rom.getFile();
+        String romFormat = rom.getFormat();
+        byte[] romZBuildDate = N64Util.readFileToBytes(romFile, 28672, 151552);
+        String zromEdition = romZ.getEdition();
+        int offset = -1;
+
+        if (Objects.equals(zromEdition, "Nintendo 64"))
+            offset = new String(romZBuildDate).indexOf("zelda@") + 28684;
+        else if (Objects.equals(zromEdition, "Nintendo GameCube"))
+            offset = new String(romZBuildDate).indexOf("zelda@") + 28688;
+
+        if (offset != -1 && Objects.equals(romFormat, "z64"))
+            romZ.setBuildDate(new String(N64Util.readFileToBytes(romFile, offset, 17)));
+    }
+
+    // Return Loaded ROM Creator (Type Zelda)
+    protected String getBuildDate() {
+        String romZBuildDate = romZ.getBuildDate();
+
+        if (this.isZelda()) {
+            if (romZBuildDate == null)
+                romZBuildDate = Launcher.bundle.getString("invalid");
+        }
+        else
+            romZBuildDate = Launcher.bundle.getString("unsupported");
+
+        return romZBuildDate;
+    }
+
     // Load ROM Compression (Type Zelda)
     protected void loadCompression() {
         long romSize = rom.getSize();
@@ -666,6 +718,14 @@ public class RomController {
                 break;
             case "releaseAddress":
                 offset = 12;
+                length = 4;
+                break;
+            case "CRC1":
+                offset = 16;
+                length = 4;
+                break;
+            case "CRC2":
+                offset = 20;
                 length = 4;
                 break;
         }
@@ -763,15 +823,15 @@ public class RomController {
             pw.println("Rom CIC:                    " + this.getCIC());
             pw.println("Rom CRC:                    " + this.getCRC());
             pw.println("Rom CRC Status:             " + this.getCRCStatus());
-            //pw.println("");
-            //pw.println("--------------------");
-            //pw.println(" Zelda Informations");
-            //pw.println("--------------------");
-            //pw.println("Real Rom Name:              " + lblZName.getText());
-            //pw.println("Rom Edition:                " + lblZEdition.getText());
-            //pw.println("Rom Status:                 " + lblZStatus.getText());
-            //pw.println("Rom Creator:                " + lblZCreator.getText());
-            //pw.println("Rom Build Date:             " + lblZBuildDate.getText());
+            pw.println("");
+            pw.println("--------------------");
+            pw.println(" Zelda Informations");
+            pw.println("--------------------");
+            pw.println("Real Rom Name:              " + this.getRealName());
+            pw.println("Rom Edition:                " + this.getEdition());
+            pw.println("Rom Creator:                " + this.getCreator());
+            pw.println("Rom Build Date:             " + this.getBuildDate());
+            pw.println("Rom Compression:            " + this.getCompression());
             pw.println("");
             pw.println("---------------------");
             pw.println(" Header Informations");
@@ -780,6 +840,8 @@ public class RomController {
             pw.println("Rom Clock Rate Override:    " + this.getHeader("clockRate"));
             pw.println("Rom Program Counter:        " + this.getHeader("programCounter"));
             pw.println("Rom Release Address:        " + this.getHeader("releaseAddress"));
+            pw.println("Rom CRC 1:                  " + this.getHeader("CRC1"));
+            pw.println("Rom CRC 2:                  " + this.getHeader("CRC2"));
             pw.println("");
             pw.println("------------------------");
             pw.println(" Checksums Informations");
@@ -804,11 +866,20 @@ public class RomController {
         System.out.println("Rom CIC:                    " + rom.getCIC());
         System.out.println("Rom CRC:                    " + rom.getCRC());
         System.out.println("");
+        System.out.println("-- ZELDA INFORMATIONS --");
+        System.out.println("Rom Real Name:              " + romZ.getRealName());
+        System.out.println("Rom Edition:                " + romZ.getEdition());
+        System.out.println("Rom Creator:                " + romZ.getCreator());
+        System.out.println("Rom Build Date:             " + romZ.getBuildDate());
+        System.out.println("Rom Compression:            " + romZ.getCompression());
+        System.out.println("");
         System.out.println("-- HEADER INFORMATIONS --");
         System.out.println("Rom Byte Format:            " + rom.getByteFormat());
         System.out.println("Rom Clock Rate Override:    " + rom.getClockRate());
         System.out.println("Rom Program Counter:        " + rom.getProgramCounter());
         System.out.println("Rom Release Address:        " + rom.getReleaseAddress());
+        System.out.println("Rom CRC 1:                  " + rom.getCRC1());
+        System.out.println("Rom CRC 2:                  " + rom.getCRC2());
         System.out.println("");
         System.out.println("-- CHECKSUMS INFORMATIONS --");
         System.out.println("MD5:                        " + rom.getMD5());
