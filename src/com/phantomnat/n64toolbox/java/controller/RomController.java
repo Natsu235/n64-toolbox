@@ -619,7 +619,7 @@ public class RomController {
         return romZCreator;
     }
 
-    // Load ROM Creator (Type Zelda)
+    // Load ROM Build Date (Type Zelda)
     protected void loadBuildDate() throws IOException {
         File romFile = rom.getFile();
         String romFormat = rom.getFormat();
@@ -636,7 +636,7 @@ public class RomController {
             romZ.setBuildDate(new String(N64Util.readFileToBytes(romFile, offset, 17)));
     }
 
-    // Return Loaded ROM Creator (Type Zelda)
+    // Return Loaded ROM Build Date (Type Zelda)
     protected String getBuildDate() {
         String romZBuildDate = romZ.getBuildDate();
 
