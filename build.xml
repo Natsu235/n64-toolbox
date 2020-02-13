@@ -50,4 +50,24 @@
     nbproject/build-impl.xml and nbproject/jfx-impl.xml.
 
     -->
+    <target name="-pre-jfx-jar">
+        <property name="project.name" value="N64 Toolbox" />
+        <property name="version.num" value="1.0" />
+        <tstamp>
+            <format property="NOW" pattern="yyyy-MM-dd HH:mm:ss z" />
+        </tstamp>
+
+        <manifest file="${manifest.file}" mode="update">
+            <!--<section name="Bundle">
+                <attribute name="Built-By" value="${user.name}" />
+                <attribute name="Build-Jdk" value="${java.version}" />-->
+                <attribute name="Build-Date" value="${NOW}" />
+            <!--</section>
+            <section name="Application">
+                <attribute name="Implementation-Title" value="${project.name}" />
+                <attribute name="Implementation-Version" value="${version.num}" />
+                <attribute name="Implementation-Vendor" value="" />
+            </section>-->
+       </manifest>
+    </target>
 </project>

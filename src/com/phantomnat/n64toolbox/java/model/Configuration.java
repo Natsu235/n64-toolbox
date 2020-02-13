@@ -22,8 +22,8 @@ public class Configuration {
     private static String appIcon = "/com/phantomnat/n64toolbox/resources/images/n64-icon.png";
     private static Locale appLang = Locale.ENGLISH;
     // Window
-    private static double width = 720;
-    private static double height = 480;
+    private static int width = 720;
+    private static int height = 480;
     private static boolean resizable = true;
     // Debug
     private static boolean debug = false;
@@ -37,8 +37,8 @@ public class Configuration {
     public static String getCRCList() { return crcList; }
     public static String getIcon() { return appIcon; }
     public static Locale getLanguage() { return appLang; }
-    public static double getWidth() { return width; }
-    public static double getHeight() { return height; }
+    public static int getWidth() { return width; }
+    public static int getHeight() { return height; }
     public static boolean getResizable() { return resizable; }
     public static boolean getDebug() { return debug; }
 
@@ -49,8 +49,8 @@ public class Configuration {
     //public void getCRCList(String crcList) { this.crcList = crcList; }
     //public void setIcon(String appIcon) { this.appIcon = appIcon; }
     public void setLanguage(Locale appLang) { this.appLang = appLang; }
-    public void setWidth(double width) { this.width = width; }
-    public void setHeight(double height) { this.height = height; }
+    public void setWidth(int width) { this.width = width; }
+    public void setHeight(int height) { this.height = height; }
     public void setResizable(boolean resizable) { this.resizable = resizable; }
     public void setDebug(boolean debug) { this.debug = debug; }
 

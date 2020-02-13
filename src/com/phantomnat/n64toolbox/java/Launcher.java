@@ -12,11 +12,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -56,6 +58,18 @@ public class Launcher extends Application {
         }
         String lang = getParameters().getNamed().get("lang");
 
+        // Load Manifest
+        String buildDate = null;
+        try {
+            InputStream is = getClass().getResourceAsStream("/META-INF/MANIFEST.MF");
+            Manifest manifest = new Manifest(is);
+            Attributes attributes = manifest.getMainAttributes();
+            buildDate = attributes.getValue("Build-Date");
+        }
+        catch (IOException ex) {
+            Exception except = new Exception(bundle.getString("exceptionHandler"), bundle.getString("exceptionHandlerText"), bundle.getString("exceptionHeader"), ex);
+        }
+
         // Load Configuration
         File configFile = new File(config.getConfigPath());
         if (configFile.exists()) {
@@ -67,8 +81,8 @@ public class Launcher extends Application {
             }
             config.setRomDirectory(options.get("Local", "RomDirectory", File.class));
             config.setLanguage(new Locale(lang != null ? lang : options.get("Local", "Language", String.class)));
-            config.setWidth(options.get("Window", "Width", double.class));
-            config.setHeight(options.get("Window", "Height", double.class));
+            config.setWidth(options.get("Window", "Width", int.class));
+            config.setHeight(options.get("Window", "Height", int.class));
             config.setResizable(options.get("Window", "IsResizable", boolean.class));
             config.setDebug(debug ? true : options.get("Debug", "IsDebug", boolean.class));
         }
@@ -88,7 +102,7 @@ public class Launcher extends Application {
         Image icon = new Image(getClass().getResource(config.getIcon()).toString());
         Scene scene = new Scene(root, config.getWidth(), config.getHeight());
         stage.setScene(scene);
-        stage.setTitle(build.getTitle() + " " + build.getVersion() + (debug ? " - Debug Mode" : ""));
+        stage.setTitle(build.getTitle() + " " + build.getVersion() + (config.getDebug() ? (buildDate != null ? " - " + buildDate + " (Debug)" : " - (Debug)") : ""));
         stage.getIcons().add(icon);
         stage.setResizable(config.getResizable());
         stage.show();
