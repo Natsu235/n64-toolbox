@@ -81,8 +81,8 @@ public class Launcher extends Application {
             }
             config.setRomDirectory(options.get("Local", "RomDirectory", File.class));
             config.setLanguage(new Locale(lang != null ? lang : options.get("Local", "Language", String.class)));
-            config.setWidth(options.get("Window", "Width", int.class));
-            config.setHeight(options.get("Window", "Height", int.class));
+            config.setWidth(options.get("Window", "Width", double.class));
+            config.setHeight(options.get("Window", "Height", double.class));
             config.setResizable(options.get("Window", "IsResizable", boolean.class));
             config.setDebug(debug ? true : options.get("Debug", "IsDebug", boolean.class));
         }

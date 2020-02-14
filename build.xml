@@ -68,6 +68,6 @@
                 <attribute name="Implementation-Version" value="${version.num}" />
                 <attribute name="Implementation-Vendor" value="" />
             </section>-->
-       </manifest>
+        </manifest>
     </target>
 </project>
